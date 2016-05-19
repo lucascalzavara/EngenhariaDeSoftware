@@ -66,29 +66,18 @@ public class DAOCliente {
                 +c.getNumero()+"', observacoes = '"+c.getObservacoes()+"' where cnpj = '"+c.getCnpj()+"';");
     }
     
-    public Cliente consulta(String cnpj) throws SQLException{
-        Cliente c = new Cliente();
+    public List<Cliente> consultaCnpj(String str) throws SQLException{
+        List<Cliente> clis = new ArrayList<>();
         conec();
-        try (PreparedStatement pstm = con.prepareStatement("Select * from cliente where cnpj = ?")) {
-            pstm.setString(1, cnpj);
+        try (PreparedStatement pstm = con.prepareStatement("Select * from cliente where cnpj = '"+str+"'")) {
             ResultSet rs = pstm.executeQuery();
-            if(rs.next()){
-                c.setCnpj(rs.getString("cnpj"));
-                c.setRazaosocial(rs.getString("razaosocial"));
-                c.setNomefantasia(rs.getString("nomefantasia"));
-                c.setInscricaoestadual(rs.getString("inscricaoestadual"));
-                c.setTelefone(rs.getString("telefone"));
-                c.setCidade(rs.getString("cidade"));
-                c.setUf(rs.getString("uf"));
-                c.setRua(rs.getString("rua"));
-                c.setBairro(rs.getString("bairro"));
-                c.setNumero(rs.getString("numero"));
-                c.setObservacoes(rs.getString("observacoes"));
-
+            while(rs.next()){
+                Cliente cli = new Cliente(rs.getString("cnpj"), rs.getString("razaosocial"), rs.getString("nomefantasia"), rs.getString("inscricaoestadual"), rs.getString("telefone"), rs.getString("rua"), rs.getString("bairro"), rs.getString("numero"), rs.getString("cidade"), rs.getString("uf"), rs.getString("observacoes"));
+            clis.add(cli);
             }   
         }
-        close();
-        return c;
+       close();
+        return clis; 
     }
     
     public List<Cliente> consultaRazaoSocial(String str) throws SQLException{

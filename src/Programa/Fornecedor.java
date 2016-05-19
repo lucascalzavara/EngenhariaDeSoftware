@@ -5,6 +5,9 @@
  */
 package Programa;
 
+import DAO.DAOFornecedor;
+import java.sql.SQLException;
+
 /**
  *
  * @author Lucas Calzavara
@@ -138,4 +141,23 @@ public class Fornecedor {
         this.observacoes = observacoes;
     }
     
+    public boolean insere(){
+        DAOFornecedor con = new DAOFornecedor();
+        try {
+            con.insere(this);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+    
+    public boolean altera(){
+        DAOFornecedor con = new DAOFornecedor();
+        try {
+            con.atualiza(this);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

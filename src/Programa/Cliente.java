@@ -5,6 +5,11 @@
  */
 package Programa;
 
+import DAO.DAOCliente;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Lucas Calzavara
@@ -129,7 +134,27 @@ public class Cliente {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-
+    
+    public boolean insere(){
+        DAOCliente con = new DAOCliente();
+        try {
+            con.insere(this);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+    
+    public boolean altera(){
+        DAOCliente con = new DAOCliente();
+        try {
+            con.atualiza(this);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+    
     
     
 }

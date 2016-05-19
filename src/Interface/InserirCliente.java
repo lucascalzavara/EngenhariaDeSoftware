@@ -6,11 +6,7 @@
 package Interface;
 
 import Programa.Cliente;
-import DAO.DAOCliente;
 import java.awt.Color;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -19,11 +15,18 @@ import javax.swing.JTextField;
  * @author Lucas Calzavara
  */
 public class InserirCliente extends javax.swing.JFrame {
-
+    InterfaceCliente inter = new InterfaceCliente();
     /**
      * Creates new form Cadastrar
+     * @param c
      */
-    public InserirCliente() {
+    public InserirCliente(InterfaceCliente c) {
+        initComponents();
+        setTitle("Incluir Cliente");
+        this.inter=c;
+    }
+    
+    public InserirCliente(){
         initComponents();
     }
 
@@ -289,13 +292,12 @@ public class InserirCliente extends javax.swing.JFrame {
         if ((cnpj.getText().isEmpty()) || (razao.getText().isEmpty()) || (nome.getText().isEmpty()) || (telefone.getText().isEmpty())||(rua.getText().isEmpty())|| (bairro.getText().isEmpty()) ||(cidade.getText().isEmpty()) ||(numero.getText().isEmpty()) || (uf.getText().isEmpty())  ) {
             JOptionPane.showMessageDialog(null, "Campos obrigatórios não preenchidos.");
         }else{
-            try {
-                Cliente c = new Cliente(cnpj.getText(), razao.getText(), nome.getText(), inscricao.getText(), telefone.getText(), rua.getText(), bairro.getText(), numero.getText(), cidade.getText(), uf.getText(), observacoes.getText());
-                DAOCliente con = new DAOCliente();
-                con.insere(c);
-                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE, null);
+            Cliente c = new Cliente(cnpj.getText(), razao.getText(), nome.getText(), inscricao.getText(), telefone.getText(), rua.getText(), bairro.getText(), numero.getText(), cidade.getText(), uf.getText(), observacoes.getText());
+            if(c.insere()){
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+                inter.consultarTodos();
                 dispose();
-            } catch (SQLException ex) {
+            }else{
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
             }
         }

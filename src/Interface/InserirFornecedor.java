@@ -15,10 +15,16 @@ import javax.swing.JOptionPane;
  * @author Lucas Calzavara
  */
 public class InserirFornecedor extends javax.swing.JFrame {
-
+    InterfaceFornecedor inter = new InterfaceFornecedor();
     /**
      * Creates new form InserirFornecedor
      */
+    public InserirFornecedor(InterfaceFornecedor inter) {
+        initComponents();
+        setTitle("Inserir Fornecedor");
+        this.inter = inter;
+    }
+    
     public InserirFornecedor() {
         initComponents();
         setTitle("Inserir Fornecedor");
@@ -290,13 +296,12 @@ public class InserirFornecedor extends javax.swing.JFrame {
         if ((cnpj.getText().isEmpty()) || (razao.getText().isEmpty()) || (cidade.getText().isEmpty()) || (uf.getText().isEmpty())){
             JOptionPane.showMessageDialog(null, "Campos obrigatórios não preenchidos.");
         }else{
-            try {
-                Fornecedor f = new Fornecedor(cnpj.getText(), razao.getText(), nome.getText(), inscricao.getText(), telefone.getText(), rua.getText(), bairro.getText(), numero.getText(), cidade.getText(), uf.getText(), pedido.getText(), observacoes.getText());
-                DAOFornecedor con = new DAOFornecedor();
-                con.insere(f);
+            Fornecedor f = new Fornecedor(cnpj.getText(), razao.getText(), nome.getText(), inscricao.getText(), telefone.getText(), rua.getText(), bairro.getText(), numero.getText(), cidade.getText(), uf.getText(), pedido.getText(), observacoes.getText());
+            if(f.insere()){
                 JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE, null);
+                inter.consultarTodos();
                 dispose();
-            } catch (SQLException ex) {
+            } else {
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
             }
         }

@@ -29,21 +29,7 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
         consultarTodos();
     }
     
-    private void consultarTodos(){
-        ArrayList<Fornecedor> forns = new ArrayList<Fornecedor>();
-          DAOFornecedor c = new DAOFornecedor();
-          
-        try {
-            
-            forns = (ArrayList<Fornecedor>) c.consultaTodos();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if( forns.isEmpty()){
-            JOptionPane.showMessageDialog(null, "banco vazio");
-            return;        
-        }
+    public void preencherTabela(ArrayList<Fornecedor> forns){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new String[]{"Razão Social", "CNPJ", "Nome Fantasia", "Inscrição Estadual", "Telefone", "Rua", "Bairro", "Numero", "Cidade", "UF", "Pedido Minimo","Observações"});
         Object[] fila = new Object[modelo.getColumnCount()];
@@ -64,6 +50,24 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
         }
         Tabela.setModel(modelo);
     }
+    
+    public void consultarTodos(){
+        ArrayList<Fornecedor> forns = new ArrayList<Fornecedor>();
+          DAOFornecedor c = new DAOFornecedor();
+          
+        try {
+            
+            forns = (ArrayList<Fornecedor>) c.consultaTodos();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if( forns.isEmpty()){
+            JOptionPane.showMessageDialog(null, "banco vazio");
+            return;        
+        }
+        preencherTabela(forns);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,7 +83,6 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
@@ -103,13 +106,6 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Consultar Todos");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -169,8 +165,6 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
                             .addComponent(razao))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
@@ -197,9 +191,7 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
                             .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))))
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -221,41 +213,25 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DAOFornecedor f = new DAOFornecedor();
         if ("  .   .   /    -  ".equals(cnpj.getText()) && razao.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Prencha o CNPJ ou Razão Social.");
+            consultarTodos();
         }
         else if(razao.getText().isEmpty()){
-            Fornecedor forns = null;
+            ArrayList<Fornecedor> forns = new ArrayList<>();
             try {
-                forns = f.consulta(cnpj.getText());
+                forns = (ArrayList<Fornecedor>)f.consultaCnpj(cnpj.getText());
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 cnpj.setText(null);
                 return;
             }
-            if(forns.getCnpj() == null){
+            if(forns.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 cnpj.setText(null);
                 return;
+            } else {
             }
 
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.setColumnIdentifiers(new String[]{"Razão Social", "CNPJ", "Nome Fantasia", "Inscrição Estadual", "Telefone", "Rua", "Bairro", "Numero", "Cidade", "UF", "Pedido Minimo", "Observações"});
-            Object[] fila = new Object[modelo.getColumnCount()];
-
-            fila[0] = forns.getRazaosocial();
-            fila[1] = forns.getCnpj();
-            fila[2] = forns.getNomefantasia();
-            fila[3] = forns.getInscricaoestadual();
-            fila[4] = forns.getTelefone();
-            fila[5] = forns.getRua();
-            fila[6] = forns.getBairro();
-            fila[7] = forns.getNumero();
-            fila[8] = forns.getCidade();
-            fila[9] = forns.getUf();
-            fila[10] = forns.getPedidominimo();
-            fila[11] = forns.getObservacoes();
-            modelo.addRow(fila);
-            Tabela.setModel(modelo);
+            preencherTabela(forns);
             cnpj.setText(null);
             
         }else{
@@ -271,32 +247,10 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Não encontrado");
                 return;        
             }
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.setColumnIdentifiers(new String[]{"Razão Social", "CNPJ", "Nome Fantasia", "Inscrição Estadual", "Telefone", "Rua", "Bairro", "Numero", "Cidade", "UF", "Pedido Minimo", "Observações"});
-            Object[] fila = new Object[modelo.getColumnCount()];
-            for (int i = 0; i < forns.size(); i++) {
-                fila[0] = forns.get(i).getRazaosocial();
-                fila[1] = forns.get(i).getCnpj();
-                fila[2] = forns.get(i).getNomefantasia();
-                fila[3] = forns.get(i).getInscricaoestadual();
-                fila[4] = forns.get(i).getTelefone();
-                fila[5] = forns.get(i).getRua();
-                fila[6] = forns.get(i).getBairro();
-                fila[7] = forns.get(i).getNumero();
-                fila[8] = forns.get(i).getCidade();
-                fila[9] = forns.get(i).getUf();
-                fila[10] = forns.get(i).getPedidominimo();
-                fila[11] = forns.get(i).getObservacoes();
-                modelo.addRow(fila);
-            }
-            Tabela.setModel(modelo);
+            preencherTabela(forns);
             razao.setText(null);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        consultarTodos();
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int selecionada = Tabela.getSelectedRow();
@@ -317,8 +271,7 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        InserirFornecedor c = new InserirFornecedor();
-        c.setVisible(true);
+        new InserirFornecedor(this).setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -331,10 +284,7 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
             Tabela.getValueAt(selecionada, 5).toString(), Tabela.getValueAt(selecionada, 6).toString(), Tabela.getValueAt(selecionada, 7).toString(),
             Tabela.getValueAt(selecionada, 8).toString(), Tabela.getValueAt(selecionada, 9).toString(), Tabela.getValueAt(selecionada, 10).toString(),
             Tabela.getValueAt(selecionada, 11).toString());
-            AlterarFornecedor a = new AlterarFornecedor();
-            a.setF(forn);
-            a.carregarDados();
-            a.setVisible(true);
+            new AlterarFornecedor(forn, this).setVisible(true);
             
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -378,7 +328,6 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
     private javax.swing.JTable Tabela;
     private javax.swing.JFormattedTextField cnpj;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

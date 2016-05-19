@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,7 +29,7 @@ public class InterfaceCliente extends javax.swing.JFrame {
         setTitle("Clientes");
     }
     
-    private void consultarTodos(){
+    void consultarTodos(){
         ArrayList<Cliente> clis = new ArrayList<Cliente>();
           DAOCliente c = new DAOCliente();
           
@@ -45,6 +44,10 @@ public class InterfaceCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "banco vazio");
             return;        
         }
+        preencherTabela(clis);
+    }
+    
+    public void preencherTabela(ArrayList<Cliente> clis){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new String[]{"Razão Social", "CNPJ", "Nome Fantasia", "Inscrição Estadual", "Telefone", "Rua", "Bairro", "Numero", "Cidade", "UF", "Observações"});
         Object[] fila = new Object[modelo.getColumnCount()];
@@ -76,7 +79,6 @@ public class InterfaceCliente extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         saiajeans = new javax.swing.JButton();
@@ -98,13 +100,6 @@ public class InterfaceCliente extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(Tabela);
-
-        jButton1.setText("Consultar Todos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("CNPJ:");
 
@@ -185,8 +180,6 @@ public class InterfaceCliente extends javax.swing.JFrame {
                     .addComponent(razao))
                 .addGap(28, 28, 28)
                 .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -204,9 +197,7 @@ public class InterfaceCliente extends javax.swing.JFrame {
                             .addComponent(razao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))))
+                        .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -221,53 +212,32 @@ public class InterfaceCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        consultarTodos();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DAOCliente c = new DAOCliente();
         if ("  .   .   /    -  ".equals(cnpj.getText()) && razao.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Prencha o CNPJ ou Razão Social.");
+            //JOptionPane.showMessageDialog(null, "Prencha o CNPJ ou Razão Social.");
+            consultarTodos();
         }
         else if(razao.getText().isEmpty()){
-            Cliente clis = null;
+            ArrayList<Cliente> clis = new ArrayList<>();
             try {
-                clis = c.consulta(cnpj.getText());
+                clis = (ArrayList<Cliente>)c.consultaCnpj(cnpj.getText());
             } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+                cnpj.setText(null);
+                return;
+            }
+            if(clis.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 cnpj.setText(null);
                 return;
             }
-            if(clis.getCnpj() == null){
-                JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
-                cnpj.setText(null);
-                return;
-            }
-
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.setColumnIdentifiers(new String[]{"Razão Social", "CNPJ", "Nome Fantasia", "Inscrição Estadual", "Telefone", "Rua", "Bairro", "Numero", "Cidade", "UF", "Observações"});
-            Object[] fila = new Object[modelo.getColumnCount()];
-
-            fila[0] = clis.getRazaosocial();
-            fila[1] = clis.getCnpj();
-            fila[2] = clis.getNomefantasia();
-            fila[3] = clis.getInscricaoestadual();
-            fila[4] = clis.getTelefone();
-            fila[5] = clis.getRua();
-            fila[6] = clis.getBairro();
-            fila[7] = clis.getNumero();
-            fila[8] = clis.getCidade();
-            fila[9] = clis.getUf();
-            fila[10] = clis.getObservacoes();
-            modelo.addRow(fila);
-            Tabela.setModel(modelo);
+            preencherTabela(clis);
             cnpj.setText(null);
             
         }else{
             
-            ArrayList<Cliente> clis = new ArrayList<Cliente>();
+            ArrayList<Cliente> clis = new ArrayList<>();
             
             try {
                 clis = (ArrayList<Cliente>) c.consultaRazaoSocial(razao.getText());
@@ -275,27 +245,10 @@ public class InterfaceCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro");
             }
             if( clis.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Não encontrado");
+                JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 return;        
             }
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.setColumnIdentifiers(new String[]{"Razão Social", "CNPJ", "Nome Fantasia", "Inscrição Estadual", "Telefone", "Rua", "Bairro", "Numero", "Cidade", "UF", "Observações"});
-            Object[] fila = new Object[modelo.getColumnCount()];
-            for (int i = 0; i < clis.size(); i++) {
-                fila[0] = clis.get(i).getRazaosocial();
-                fila[1] = clis.get(i).getCnpj();
-                fila[2] = clis.get(i).getNomefantasia();
-                fila[3] = clis.get(i).getInscricaoestadual();
-                fila[4] = clis.get(i).getTelefone();
-                fila[5] = clis.get(i).getRua();
-                fila[6] = clis.get(i).getBairro();
-                fila[7] = clis.get(i).getNumero();
-                fila[8] = clis.get(i).getCidade();
-                fila[9] = clis.get(i).getUf();
-                fila[10] = clis.get(i).getObservacoes();
-                modelo.addRow(fila);
-            }
-            Tabela.setModel(modelo);
+            preencherTabela(clis);
             razao.setText(null);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -305,10 +258,7 @@ public class InterfaceCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_saiajeansActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        InserirCliente c = new InserirCliente();
-        c.setTitle("Incluir Cliente");
-        c.setVisible(true);
-        
+        new InserirCliente(this).setVisible(true);      
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -320,13 +270,8 @@ public class InterfaceCliente extends javax.swing.JFrame {
             Tabela.getValueAt(selecionada, 2).toString(), Tabela.getValueAt(selecionada, 3).toString(), Tabela.getValueAt(selecionada, 4).toString(), 
             Tabela.getValueAt(selecionada, 5).toString(), Tabela.getValueAt(selecionada, 6).toString(), Tabela.getValueAt(selecionada, 7).toString(),
             Tabela.getValueAt(selecionada, 8).toString(), Tabela.getValueAt(selecionada, 9).toString(), Tabela.getValueAt(selecionada, 10).toString());
-            AlterarCliente a = new AlterarCliente();
-            a.setCli(cli);
-            a.carregarDados();
-            a.setVisible(true);
-            
+            new AlterarCliente(cli, this).setVisible(true);          
         }
-        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -386,11 +331,12 @@ public class InterfaceCliente extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabela;
     private javax.swing.JFormattedTextField cnpj;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

@@ -17,12 +17,20 @@ import javax.swing.JOptionPane;
 public class AlterarFornecedor extends javax.swing.JFrame {
 
     private Fornecedor f;
+    private InterfaceFornecedor inter;
     /**
      * Creates new form AlterarFornecedor
      */
-    public AlterarFornecedor() {
+    public AlterarFornecedor(Fornecedor f, InterfaceFornecedor inter) {
+        this.f=f;
+        this.inter=inter;
         initComponents();
         setTitle("Alterar Fornecedor");
+        carregarDados();
+    }
+
+    private AlterarFornecedor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void setF(Fornecedor f) {
@@ -41,9 +49,9 @@ public class AlterarFornecedor extends javax.swing.JFrame {
         bairro.setText(f.getBairro());
         observacoes.setText(f.getObservacoes());
         numero.setText(f.getNumero());
-        cnpjText.setEditable(false);
         pedido.setText(f.getPedidominimo());
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,7 +64,6 @@ public class AlterarFornecedor extends javax.swing.JFrame {
 
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        cnpjText = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         razaosocial = new javax.swing.JTextField();
         nomefantasia = new javax.swing.JTextField();
@@ -81,6 +88,7 @@ public class AlterarFornecedor extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         pedido = new javax.swing.JFormattedTextField();
         telefone = new javax.swing.JFormattedTextField();
+        cnpjText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,12 +166,7 @@ public class AlterarFornecedor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cnpjText)))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -200,17 +203,23 @@ public class AlterarFornecedor extends javax.swing.JFrame {
                             .addComponent(observacoes)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cnpjText, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cnpjText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cnpjText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -246,7 +255,7 @@ public class AlterarFornecedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(pedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(observacoes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,12 +279,11 @@ public class AlterarFornecedor extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Fornecedor forn = new Fornecedor(cnpjText.getText(), razaosocial.getText(), nomefantasia.getText(), inscricaoestadual.getText(), telefone.getText(), rua.getText(), bairro.getText(), numero.getText(), cidade.getText(), uf.getText(), pedido.getText(), observacoes.getText());
-        DAOFornecedor con = new DAOFornecedor();
-        try {
-            con.atualiza(forn);
+        if(forn.altera()){
             JOptionPane.showMessageDialog(null,"Alterado com sucesso","Mensagem",JOptionPane.INFORMATION_MESSAGE,null);
+            inter.consultarTodos();
             dispose();
-        } catch (SQLException ex) {
+        } else {
             JOptionPane.showMessageDialog(null,"Erro ao alterar","Mensagem",JOptionPane.ERROR_MESSAGE,null);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -326,7 +334,7 @@ public class AlterarFornecedor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bairro;
     private javax.swing.JTextField cidade;
-    private javax.swing.JTextField cnpjText;
+    private javax.swing.JLabel cnpjText;
     private javax.swing.JTextField inscricaoestadual;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

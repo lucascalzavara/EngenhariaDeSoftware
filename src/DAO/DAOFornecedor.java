@@ -66,29 +66,18 @@ public class DAOFornecedor {
                 +c.getNumero()+"', pedidominimo = '"+c.getPedidominimo()+"', observacoes = '"+c.getObservacoes()+"' where cnpj = '"+c.getCnpj()+"';");
     }
     
-    public Fornecedor consulta(String cnpj) throws SQLException{
-        Fornecedor c = new Fornecedor();
+    public List<Fornecedor> consultaCnpj(String str) throws SQLException{
+        List<Fornecedor> forn = new ArrayList<>();
         conec();
-        try (PreparedStatement pstm = con.prepareStatement("Select * from fornecedor where cnpj = ?")) {
-            pstm.setString(1, cnpj);
+        try (PreparedStatement pstm = con.prepareStatement("Select * from fornecedor where cnpj = '"+str+"'")) {
             ResultSet rs = pstm.executeQuery();
-            if(rs.next()){
-                c.setCnpj(rs.getString("cnpj"));
-                c.setRazaosocial(rs.getString("razaosocial"));
-                c.setNomefantasia(rs.getString("nomefantasia"));
-                c.setInscricaoestadual(rs.getString("inscricaoestadual"));
-                c.setTelefone(rs.getString("telefone"));
-                c.setCidade(rs.getString("cidade"));
-                c.setUf(rs.getString("uf"));
-                c.setRua(rs.getString("rua"));
-                c.setBairro(rs.getString("bairro"));
-                c.setNumero(rs.getString("numero"));
-                c.setPedidominimo("pedidominimo");
-                c.setObservacoes(rs.getString("observacoes"));
+            while(rs.next()){
+                Fornecedor cli = new Fornecedor(rs.getString("cnpj"), rs.getString("razaosocial"), rs.getString("nomefantasia"), rs.getString("inscricaoestadual"), rs.getString("telefone"), rs.getString("rua"), rs.getString("bairro"), rs.getString("numero"), rs.getString("cidade"), rs.getString("uf"), rs.getString("pedidominimo"), rs.getString("observacoes"));
+            forn.add(cli);
             }   
         }
-        close();
-        return c;
+       close();
+        return forn; 
     }
     
     public List<Fornecedor> consultaRazaoSocial(String str) throws SQLException{

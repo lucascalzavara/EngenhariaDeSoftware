@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 public class AlterarCliente extends javax.swing.JFrame {
 
     private Cliente cli;
+    private InterfaceCliente inter;
     
     
     public void setCli(Cliente cli) {
@@ -28,13 +29,12 @@ public class AlterarCliente extends javax.swing.JFrame {
     /**
      * Creates new form Consultar
      */
-    public AlterarCliente() {
+    public AlterarCliente(Cliente cli, InterfaceCliente inter) {
         initComponents();
-        setTitle("Alterar Cliente");
-    }
-
-    public AlterarCliente(Cliente cli) {
+        this.inter=inter;
         this.cli = cli;
+        carregarDados();
+        setTitle("Alterar Cliente");
     }
     
     public void carregarDados(){
@@ -49,7 +49,6 @@ public class AlterarCliente extends javax.swing.JFrame {
         bairro.setText(cli.getBairro());
         observacoes.setText(cli.getObservacoes());
         numero.setText(cli.getNumero());
-        cnpjText.setEditable(false);
     }
 
     /**
@@ -64,7 +63,6 @@ public class AlterarCliente extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        cnpjText = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -86,6 +84,7 @@ public class AlterarCliente extends javax.swing.JFrame {
         bairro = new javax.swing.JTextField();
         numero = new javax.swing.JTextField();
         observacoes = new javax.swing.JTextField();
+        cnpjText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,12 +103,6 @@ public class AlterarCliente extends javax.swing.JFrame {
         });
 
         jLabel1.setText("CNPJ:");
-
-        cnpjText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cnpjTextActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Razão Social:");
 
@@ -162,9 +155,11 @@ public class AlterarCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(cnpjText))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cnpjText, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -203,9 +198,9 @@ public class AlterarCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cnpjText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cnpjText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -242,7 +237,7 @@ public class AlterarCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(observacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
@@ -258,12 +253,11 @@ public class AlterarCliente extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Cliente cli = new Cliente(cnpjText.getText(), razaosocial.getText(), nomefantasia.getText(), inscricaoestadual.getText(), telefone.getText(), rua.getText(), bairro.getText(), numero.getText(), cidade.getText(), uf.getText(), observacoes.getText());
-        DAOCliente con = new DAOCliente();
-        try {
-            con.atualiza(cli);
+        if(cli.altera()){
             JOptionPane.showMessageDialog(null,"Alterado com sucesso","Mensagem",JOptionPane.INFORMATION_MESSAGE,null);
+            inter.consultarTodos();
             dispose();
-        } catch (SQLException ex) {
+        }else{
             JOptionPane.showMessageDialog(null,"Erro ao alterar","Mensagem",JOptionPane.ERROR_MESSAGE,null);
         }
 
@@ -276,10 +270,6 @@ public class AlterarCliente extends javax.swing.JFrame {
     private void ruaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ruaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ruaActionPerformed
-
-    private void cnpjTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cnpjTextActionPerformed
 
     private void razaosocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_razaosocialActionPerformed
         // TODO add your handling code here:
@@ -344,7 +334,7 @@ public class AlterarCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bairro;
     private javax.swing.JTextField cidade;
-    private javax.swing.JTextField cnpjText;
+    private javax.swing.JLabel cnpjText;
     private javax.swing.JTextField inscricaoestadual;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
