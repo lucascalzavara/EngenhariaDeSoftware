@@ -41,8 +41,7 @@ public class InterfaceCliente extends javax.swing.JFrame {
             Logger.getLogger(InterfaceCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         if( clis.isEmpty()){
-            JOptionPane.showMessageDialog(null, "banco vazio");
-            return;        
+            JOptionPane.showMessageDialog(null, "banco vazio");      
         }
         preencherTabela(clis);
     }

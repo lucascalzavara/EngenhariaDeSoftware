@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DAOFornecedor {
     private final String nome = "postgres";
-    private final String senha = "lucas";
+    private final String senha = "shaco123";
     private final String url = "jdbc:postgresql://localhost/postgres";
     private final String driver = "org.postgresql.Driver";
     private Connection con;

@@ -7,8 +7,6 @@ package Programa;
 
 import DAO.DAOCliente;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -141,6 +139,7 @@ public class Cliente {
             con.insere(this);
             return true;
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }

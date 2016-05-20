@@ -289,7 +289,7 @@ public class InserirCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if ((cnpj.getText().isEmpty()) || (razao.getText().isEmpty()) || (nome.getText().isEmpty()) || (telefone.getText().isEmpty())||(rua.getText().isEmpty())|| (bairro.getText().isEmpty()) ||(cidade.getText().isEmpty()) ||(numero.getText().isEmpty()) || (uf.getText().isEmpty())  ) {
+        if ((cnpj.getText().isEmpty()) || (razao.getText().isEmpty()) ||  (rua.getText().isEmpty())|| (bairro.getText().isEmpty()) ||(cidade.getText().isEmpty()) ||(numero.getText().isEmpty()) || (uf.getText().isEmpty())  ) {
             JOptionPane.showMessageDialog(null, "Campos obrigatórios não preenchidos.");
         }else{
             Cliente c = new Cliente(cnpj.getText(), razao.getText(), nome.getText(), inscricao.getText(), telefone.getText(), rua.getText(), bairro.getText(), numero.getText(), cidade.getText(), uf.getText(), observacoes.getText());

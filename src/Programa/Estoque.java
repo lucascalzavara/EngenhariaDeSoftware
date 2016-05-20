@@ -13,24 +13,34 @@ import java.sql.SQLException;
  * @author Lucas Calzavara
  */
 public class Estoque {
+              private int cod;
+
+    public int getCod() {
+        return cod;
+    }
+
+    public void setCod(int cod) {
+        this.cod = cod;
+    }
               private float valor;
 	      private int qtd; 
 	      private int cdbarra ;
 	      private String marca;
 	      private String descricao ;
 	      private String fornecedor;
-	      private float precocust;
+	      private float precocusto;
 	      private String un;
 	      private String obs;
 
-    public Estoque(float valor, int qtd, int cdbarra, String marca, String descricao, String fornecedor, float precocust, String un, String obs) {
+    public Estoque(int cod,float valor, int qtd, int cdbarra, String marca, String descricao, String fornecedor, float precocust, String un, String obs) {
+        this.cod=cod;
         this.valor = valor;
         this.qtd = qtd;
         this.cdbarra = cdbarra;
         this.marca = marca;
         this.descricao = descricao;
         this.fornecedor = fornecedor;
-        this.precocust = precocust;
+        this.precocusto = precocust;
         this.un = un;
         this.obs = obs;
     }
@@ -88,12 +98,12 @@ public class Estoque {
         this.fornecedor = fornecedor;
     }
 
-    public float getPrecocust() {
-        return precocust;
+    public float getPrecocusto() {
+        return precocusto;
     }
 
-    public void setPrecocust(float precocust) {
-        this.precocust = precocust;
+    public void setPrecocusto(float precocust) {
+        this.precocusto = precocust;
     }
 
     public String getUn() {
