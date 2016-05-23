@@ -76,39 +76,40 @@ public class DAOEstoque {
         try (PreparedStatement pstm = con.prepareStatement("Select * from estoque where cod = "+cd+"")) {
             ResultSet rs = pstm.executeQuery();
             while(rs.next()){
-                Estoque cli = new Estoque(rs.getString("cnpj"), rs.getString("razaosocial"), rs.getString("nomefantasia"), rs.getString("inscricaoestadual"), rs.getString("telefone"), rs.getString("rua"), rs.getString("bairro"), rs.getString("numero"), rs.getString("cidade"), rs.getString("uf"), rs.getString("pedidominimo"), rs.getString("observacoes"));
-            forn.add(cli);
+                Estoque cli = new Estoque(rs.getFloat("valor"), rs.getInt("qtd"), rs.getInt("cdbarra"), rs.getString("marca"), rs.getString("descricao"), rs.getString("fornecedor"), rs.getFloat("precocusto"), rs.getString("un"), rs.getString("obs"));
+            estoq.add(cli);
             }   
         }
        close();
-        return forn; 
+        return estoq; 
     }
-    
-    public List<Fornecedor> consultaRazaoSocial(String str) throws SQLException{
-        List<Fornecedor> forn = new ArrayList<>();
+    public List<Estoque> consultaDescricao(String str) throws SQLException{
+        List<Estoque> estoq = new ArrayList<>();
         conec();
-        try (PreparedStatement pstm = con.prepareStatement("Select * from fornecedor where razaosocial like '"+str+"%' order by razaosocial")) {
+        try (PreparedStatement pstm = con.prepareStatement("Select * from estoque where descricao like '"+str+"%' order by razaosocial")) {
             ResultSet rs = pstm.executeQuery();
             while(rs.next()){
-                Fornecedor cli = new Fornecedor(rs.getString("cnpj"), rs.getString("razaosocial"), rs.getString("nomefantasia"), rs.getString("inscricaoestadual"), rs.getString("telefone"), rs.getString("rua"), rs.getString("bairro"), rs.getString("numero"), rs.getString("cidade"), rs.getString("uf"), rs.getString("pedidominimo"), rs.getString("observacoes"));
-            forn.add(cli);
+                Estoque cli = new Estoque(rs.getFloat("valor"), rs.getInt("qtd"), rs.getInt("cdbarra"), rs.getString("marca"), rs.getString("descricao"), rs.getString("fornecedor"), rs.getFloat("precocusto"), rs.getString("un"), rs.getString("obs"));
+            estoq.add(cli);
             }   
         }
        close();
-        return forn; 
+        return estoq; 
     }
     
-    public List<Fornecedor> consultaTodos() throws SQLException{
-        List<Fornecedor> forn = new ArrayList<>();
+    
+    
+    public List<Estoque> consultaTodos() throws SQLException{
+        List<Estoque> estoq = new ArrayList<>();
         conec();
-        try (PreparedStatement pstm = con.prepareStatement("Select * from fornecedor order by razaosocial")) {
+        try (PreparedStatement pstm = con.prepareStatement("Select * from estoque order by cod")) {
             ResultSet rs = pstm.executeQuery();
             while(rs.next()){
-                Fornecedor cli = new Fornecedor(rs.getString("cnpj"), rs.getString("razaosocial"), rs.getString("nomefantasia"), rs.getString("inscricaoestadual"), rs.getString("telefone"), rs.getString("rua"), rs.getString("bairro"), rs.getString("numero"), rs.getString("cidade"), rs.getString("uf"), rs.getString("pedidominimo"), rs.getString("observacoes"));
-            forn.add(cli);
+            Estoque cli = new Estoque(rs.getFloat("valor"), rs.getInt("qtd"), rs.getInt("cdbarra"), rs.getString("marca"), rs.getString("descricao"), rs.getString("fornecedor"), rs.getFloat("precocusto"), rs.getString("un"), rs.getString("obs")); 
+            estoq.add(cli);
             }   
         }
        close();
-        return forn; 
+        return estoq; 
 }
 }
