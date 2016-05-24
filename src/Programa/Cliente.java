@@ -6,7 +6,9 @@
 package Programa;
 
 import DAO.DAOCliente;
+import Interface.InterfaceCliente;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,8 +42,14 @@ public class Cliente {
         this.uf = uf;
         this.observacoes = observacoes;
     }
-
     
+    public Cliente (String cnpj){
+        this.cnpj = cnpj;
+    }
+
+    public Cliente (String razaosocial, int razao){
+        this.razaosocial = razaosocial;
+    }
     
     public Cliente(){
         
@@ -141,7 +149,6 @@ public class Cliente {
             con.insere(this);
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             return false;
         }
     }
@@ -154,6 +161,49 @@ public class Cliente {
         } catch (SQLException ex) {
             return false;
         }
+    }
+    
+    public boolean exclui(){
+        DAOCliente con = new DAOCliente();
+        try{
+            con.exclui(cnpj);
+            return true;
+        } catch(SQLException ex){
+            return false;
+        }
+    }
+    
+    public ArrayList<Cliente> ConsultaTodos(){
+        ArrayList<Cliente> clis = new ArrayList<>();
+        DAOCliente c = new DAOCliente();
+        try {
+            clis = (ArrayList<Cliente>) c.consultaTodos();
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clis;
+    }
+    
+    public ArrayList<Cliente> ConsultaCnpj(){
+        DAOCliente c = new DAOCliente();
+        ArrayList<Cliente> forn = new ArrayList<>();
+        try {
+            forn = (ArrayList<Cliente>)c.consultaCnpj(cnpj);
+        } catch (SQLException ex) {
+            
+        }
+        return forn;
+    }
+
+    public ArrayList<Cliente> ConsultaRazao(){
+        DAOCliente c = new DAOCliente();
+        ArrayList<Cliente> forn = new ArrayList<>();
+            try {
+                forn = (ArrayList<Cliente>) c.consultaRazaoSocial(razaosocial);
+            } catch (SQLException ex) {
+                
+            }
+            return forn;
     }
     
     

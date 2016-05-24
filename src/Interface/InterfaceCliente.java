@@ -6,11 +6,7 @@
 package Interface;
 
 import Programa.Cliente;
-import DAO.DAOCliente;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,16 +26,8 @@ public class InterfaceCliente extends javax.swing.JFrame {
     }
     
     void consultarTodos(){
-        ArrayList<Cliente> clis = new ArrayList<Cliente>();
-          DAOCliente c = new DAOCliente();
-          
-        try {
-            
-            clis = (ArrayList<Cliente>) c.consultaTodos();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Cliente c = new Cliente();
+        ArrayList<Cliente> clis = c.ConsultaTodos();
         if( clis.isEmpty()){
             JOptionPane.showMessageDialog(null, "banco vazio");      
         }
@@ -212,20 +200,13 @@ public class InterfaceCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        DAOCliente c = new DAOCliente();
+        
         if ("  .   .   /    -  ".equals(cnpj.getText()) && razao.getText().isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Prencha o CNPJ ou Razão Social.");
             consultarTodos();
         }
         else if(razao.getText().isEmpty()){
-            ArrayList<Cliente> clis = new ArrayList<>();
-            try {
-                clis = (ArrayList<Cliente>)c.consultaCnpj(cnpj.getText());
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
-                cnpj.setText(null);
-                return;
-            }
+            Cliente c = new Cliente (cnpj.getText());
+            ArrayList<Cliente> clis = c.ConsultaCnpj();
             if(clis.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 cnpj.setText(null);
@@ -235,14 +216,8 @@ public class InterfaceCliente extends javax.swing.JFrame {
             cnpj.setText(null);
             
         }else{
-            
-            ArrayList<Cliente> clis = new ArrayList<>();
-            
-            try {
-                clis = (ArrayList<Cliente>) c.consultaRazaoSocial(razao.getText());
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro");
-            }
+            Cliente c = new Cliente(razao.getText(), 1);
+            ArrayList<Cliente> clis = c.ConsultaRazao();
             if( clis.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 return;        
@@ -278,14 +253,11 @@ public class InterfaceCliente extends javax.swing.JFrame {
         if (selecionada == -1){
             JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }else{
-            String str = Tabela.getValueAt(selecionada, 1).toString();
-            DAOCliente c = new DAOCliente();
-            try {
-                c.exclui(str);
-                JOptionPane.showMessageDialog(null, "Excluido com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE, null);
-                
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            Cliente c = new Cliente(Tabela.getValueAt(selecionada, 1).toString());
+            if(c.exclui()){
+                JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+            }else{
+                JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
             }
         }
         consultarTodos();

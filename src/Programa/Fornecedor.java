@@ -5,8 +5,13 @@
  */
 package Programa;
 
+import DAO.DAOCliente;
 import DAO.DAOFornecedor;
+import Interface.InterfaceCliente;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,6 +44,14 @@ public class Fornecedor {
         this.uf = uf;
         this.pedidominimo = pedidominimo;
         this.observacoes = observacoes;
+    }
+    
+    public Fornecedor (String cnpj){
+        this.cnpj = cnpj;
+    }
+    
+    public Fornecedor (String razaosocial, int razao){
+        this.razaosocial = razaosocial;
     }
 
     public Fornecedor() {
@@ -159,5 +172,48 @@ public class Fornecedor {
         } catch (SQLException ex) {
             return false;
         }
+    }
+    
+    public boolean exclui(){
+        DAOFornecedor con = new DAOFornecedor();
+        try{
+            con.exclui(cnpj);
+            return true;
+        } catch (SQLException ex){
+            return false;
+        }
+    }
+    
+    public ArrayList<Fornecedor> ConsultaTodos(){
+        ArrayList<Fornecedor> forn = new ArrayList<>();
+        DAOFornecedor f = new DAOFornecedor();
+        try {
+            forn = (ArrayList<Fornecedor>) f.consultaTodos();
+        } catch (SQLException ex) {
+
+        }
+        return forn;
+    }
+    
+    public ArrayList<Fornecedor> ConsultaCnpj(){
+        DAOFornecedor f = new DAOFornecedor();
+        ArrayList<Fornecedor> forn = new ArrayList<>();
+        try {
+            forn = (ArrayList<Fornecedor>)f.consultaCnpj(cnpj);
+        } catch (SQLException ex) {
+            
+        }
+        return forn;
+    }
+
+    public ArrayList<Fornecedor> ConsultaRazao(){
+        DAOFornecedor f = new DAOFornecedor();
+        ArrayList<Fornecedor> forn = new ArrayList<>();
+            try {
+                forn = (ArrayList<Fornecedor>) f.consultaRazaoSocial(razaosocial);
+            } catch (SQLException ex) {
+                
+            }
+            return forn;
     }
 }

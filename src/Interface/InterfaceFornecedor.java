@@ -5,12 +5,8 @@
  */
 package Interface;
 
-import DAO.DAOFornecedor;
 import Programa.Fornecedor;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -52,16 +48,8 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
     }
     
     public void consultarTodos(){
-        ArrayList<Fornecedor> forns = new ArrayList<Fornecedor>();
-          DAOFornecedor c = new DAOFornecedor();
-          
-        try {
-            
-            forns = (ArrayList<Fornecedor>) c.consultaTodos();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Fornecedor f = new Fornecedor();
+        ArrayList<Fornecedor> forns = f.ConsultaTodos();
         if( forns.isEmpty()){
             JOptionPane.showMessageDialog(null, "banco vazio");
             return;        
@@ -211,19 +199,13 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DAOFornecedor f = new DAOFornecedor();
         if ("  .   .   /    -  ".equals(cnpj.getText()) && razao.getText().isEmpty()) {
             consultarTodos();
         }
         else if(razao.getText().isEmpty()){
-            ArrayList<Fornecedor> forns = new ArrayList<>();
-            try {
-                forns = (ArrayList<Fornecedor>)f.consultaCnpj(cnpj.getText());
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
-                cnpj.setText(null);
-                return;
-            }
+            Fornecedor f = new Fornecedor(cnpj.getText());
+            ArrayList<Fornecedor> forns = f.ConsultaCnpj();
+            
             if(forns.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 cnpj.setText(null);
@@ -235,14 +217,8 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
             cnpj.setText(null);
             
         }else{
-            
-            ArrayList<Fornecedor> forns = new ArrayList<>();
-            
-            try {
-                forns = (ArrayList<Fornecedor>) f.consultaRazaoSocial(razao.getText());
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro");
-            }
+            Fornecedor f = new Fornecedor(razao.getText(), 1);
+            ArrayList<Fornecedor> forns = f.ConsultaRazao();
             if( forns.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado");
                 return;        
@@ -257,14 +233,11 @@ public class InterfaceFornecedor extends javax.swing.JFrame {
         if (selecionada == -1){
             JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }else{
-            String str = Tabela.getValueAt(selecionada, 1).toString();
-            DAOFornecedor c = new DAOFornecedor();
-            try {
-                c.exclui(str);
+            Fornecedor f = new Fornecedor(Tabela.getValueAt(selecionada, 1).toString());
+            if(f.exclui()) {
                 JOptionPane.showMessageDialog(null, "Excluido com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE, null);
-                
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
             }
         }
         consultarTodos();

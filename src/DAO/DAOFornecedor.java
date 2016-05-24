@@ -6,50 +6,14 @@
 package DAO;
 
 import Programa.Fornecedor;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOFornecedor {
-    private final String nome = "postgres";
-    private final String senha = "shaco123";
-    private final String url = "jdbc:postgresql://localhost/postgres";
-    private final String driver = "org.postgresql.Driver";
-    private Connection con;
-    private Statement stm;
-    private ResultSet res;
-    
-    public void conec(){
-        try{
-            Class.forName(driver);
-            con=DriverManager.getConnection(url, nome, senha);
-        }catch(ClassNotFoundException | SQLException e){
-            System.out.println("Erro: "+e);
-        }
-    }
-        
-    public void close(){
-        try {
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void up(String sql) throws SQLException{
-        conec();
-        stm = con.createStatement();
-        stm.executeUpdate(sql);
-        close();
-    }
-    
+public class DAOFornecedor extends Conexao{
+       
     public void insere(Fornecedor c) throws SQLException{
         up("insert into fornecedor (cnpj, razaosocial, nomefantasia, inscricaoestadual, telefone, cidade, uf, rua, bairro, numero, pedidominimo,observacoes) values ('"+c.getCnpj()+"', '"+c.getRazaosocial()+"', '"+c.getNomefantasia()+"', '"+c.getInscricaoestadual()+"', '"+c.getTelefone()+"', '"+c.getCidade()+"', '"+c.getUf()+"', '"+c.getRua()+"', '"+c.getBairro()+"', '"+c.getNumero()+"', '"+c.getPedidominimo()+"','"+c.getObservacoes()+"');");
     }
