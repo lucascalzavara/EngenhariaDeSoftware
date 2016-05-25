@@ -6,11 +6,8 @@
 package Programa;
 
 import DAO.DAOCliente;
-import Interface.InterfaceCliente;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -179,7 +176,7 @@ public class Cliente {
         try {
             clis = (ArrayList<Cliente>) c.consultaTodos();
         } catch (SQLException ex) {
-            Logger.getLogger(InterfaceCliente.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         return clis;
     }

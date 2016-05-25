@@ -5,17 +5,51 @@
  */
 package Interface;
 
+import Programa.Estoque;
+import DAO.DAOEstoque;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author koala_bolo
  */
 public class AlterarEstoque extends javax.swing.JFrame {
+    private Estoque cli;
+    private InterfaceEstoque inter;
+    
+    public void setCli(Estoque cli) {
+        this.cli=cli;
+    }
 
     /**
      * Creates new form AlterarEstoque
      */
+    public AlterarEstoque(Estoque cli, InterfaceEstoque inter) {
+        initComponents();
+        this.inter=inter;
+        this.cli=cli;
+        carregarDados();
+        SetTitle("Alterar Estoque");
+    }
+    public void carregarDados () {
+        valor.setText(String.valueOf(cli.getValor()));
+        qtd.setText(String.valueOf(cli.getQtd()));
+        cdbarra.setText(String.valueOf(cli.getCdbarra()));
+        marca.setText(cli.getMarca());
+        descri.setText(cli.getDescricao());
+       // forn.setText(cli.getForn());
+        preco.setText(String.valueOf(cli.getPrecocusto()));
+        un.setText(cli.getUn());
+        obs.setText(cli.getObs());
+    }
     public AlterarEstoque() {
         initComponents();
+    }
+/*
+    AlterarEstoque(Estoque cli, InterfaceEstoque aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -27,151 +61,124 @@ public class AlterarEstoque extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        rua = new javax.swing.JTextField();
-        bairro = new javax.swing.JTextField();
-        observacoes = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        descri = new javax.swing.JTextField();
+        preco = new javax.swing.JTextField();
+        un = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        razaosocial = new javax.swing.JTextField();
-        nomefantasia = new javax.swing.JTextField();
-        inscricaoestadual = new javax.swing.JTextField();
-        telefone = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        valor = new javax.swing.JTextField();
+        qtd = new javax.swing.JTextField();
+        cdbarra = new javax.swing.JTextField();
+        marca = new javax.swing.JTextField();
+        forn = new javax.swing.JComboBox<>();
+        obs = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        rua.addActionListener(new java.awt.event.ActionListener() {
+        descri.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ruaActionPerformed(evt);
+                descriActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Código");
-
-        razaosocial.addActionListener(new java.awt.event.ActionListener() {
+        valor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                razaosocialActionPerformed(evt);
+                valorActionPerformed(evt);
             }
         });
 
-        telefone.addActionListener(new java.awt.event.ActionListener() {
+        cdbarra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                telefoneActionPerformed(evt);
+                cdbarraActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Valor:");
+        marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marcaActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("Descrição:");
-
-        jLabel4.setText("Inscrição Estadual:");
-
-        jLabel5.setText("Marca:");
-
-        jLabel6.setText("Fornecedor:");
+        forn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        forn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fornActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(85, 85, 85)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel2))
+                        .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel6)))
-                .addContainerGap(407, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSeparator1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel1)
-                            .addGap(308, 308, 308))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(140, 140, 140)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(bairro)
-                                    .addGap(178, 178, 178))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(282, 282, 282))
-                                .addComponent(razaosocial)
-                                .addComponent(nomefantasia)
-                                .addComponent(inscricaoestadual)
-                                .addComponent(rua, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(observacoes))))
-                    .addContainerGap()))
+                        .addComponent(marca, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE))
+                    .addComponent(qtd)
+                    .addComponent(valor)
+                    .addComponent(cdbarra)
+                    .addComponent(descri)
+                    .addComponent(preco, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+                    .addComponent(un))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(obs)
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel2)
+                .addGap(28, 28, 28)
+                .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel4)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel5)
+                .addComponent(qtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(cdbarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addContainerGap(97, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(razaosocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(nomefantasia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(inscricaoestadual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(rua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(bairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(observacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                    .addComponent(marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(descri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(un, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(obs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ruaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ruaActionPerformed
+    private void descriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ruaActionPerformed
+    }//GEN-LAST:event_descriActionPerformed
 
-    private void razaosocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_razaosocialActionPerformed
+    private void valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_razaosocialActionPerformed
+    }//GEN-LAST:event_valorActionPerformed
 
-    private void telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefoneActionPerformed
+    private void marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_telefoneActionPerformed
+    }//GEN-LAST:event_marcaActionPerformed
+
+    private void cdbarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cdbarraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cdbarraActionPerformed
+
+    private void fornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fornActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fornActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,19 +216,19 @@ public class AlterarEstoque extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField bairro;
-    private javax.swing.JTextField inscricaoestadual;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField cdbarra;
+    private javax.swing.JTextField descri;
+    private javax.swing.JComboBox<String> forn;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField nomefantasia;
-    private javax.swing.JTextField observacoes;
-    private javax.swing.JTextField razaosocial;
-    private javax.swing.JTextField rua;
-    private javax.swing.JTextField telefone;
+    private javax.swing.JTextField marca;
+    private javax.swing.JTextField obs;
+    private javax.swing.JTextField preco;
+    private javax.swing.JTextField qtd;
+    private javax.swing.JTextField un;
+    private javax.swing.JTextField valor;
     // End of variables declaration//GEN-END:variables
+
+    private void SetTitle(String alterar_Estoque) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -4,9 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/Software.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/DAO/DAOEstoque.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InterfaceEstoque.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InterfaceFornecedor.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InterfaceCliente.java</file>
             <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/Cliente.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/Fornecedor.java</file>
         </group>
     </open-files>
 </project-private>
