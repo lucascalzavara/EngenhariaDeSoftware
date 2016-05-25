@@ -74,6 +74,11 @@ public class Teste {
         }
         
     }
+    @Test
+    public void test3(){
+    
+    
+    }
     
     @Test
     public void teste3(){
