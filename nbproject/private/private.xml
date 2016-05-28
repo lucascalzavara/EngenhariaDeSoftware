@@ -3,17 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/AlterarEstoque.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/Software.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InserirEstoque.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/DAO/DAOVendas.java</file>
             <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/DAO/DAOEstoque.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InterfaceCliente.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InterfaceEstoque.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/DAO/DAOCliente.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/Venda.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/ItemPedido.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InterfaceVendas.java</file>
             <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/Cliente.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/Fornecedor.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/PessoaJuridica.java</file>
-            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/test/Teste.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Interface/InterfaceLocalizaCliente.java</file>
+            <file>file:/C:/Users/Lucas%20Calzavara/Documents/GitHub/EngenhariaDeSoftware/src/Programa/Estoque.java</file>
         </group>
     </open-files>
 </project-private>

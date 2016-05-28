@@ -65,7 +65,7 @@ public class DAOEstoque extends Conexao{
     public List<Estoque> consultaTodos() throws SQLException{
         List<Estoque> estoq = new ArrayList<>();
         conec();
-        try (PreparedStatement pstm = con.prepareStatement("Select * from estoque order by cod")) {
+        try (PreparedStatement pstm = con.prepareStatement("Select * from estoque order by descricao")) {
             ResultSet rs = pstm.executeQuery();
             while(rs.next()){
             Estoque cli = new Estoque(rs.getFloat("valor"), rs.getInt("qtd"), rs.getInt("cdbarra"), rs.getString("marca"), rs.getString("descricao"), rs.getString("fornecedor"), rs.getFloat("precocusto"), rs.getString("un"), rs.getString("obs")); 

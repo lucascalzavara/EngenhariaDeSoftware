@@ -7,6 +7,7 @@ package Programa;
 
 import DAO.DAOEstoque;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -149,5 +150,47 @@ public class Estoque {
         }
     }
     
+    public boolean exclui(){
+        DAOEstoque con = new DAOEstoque();
+        try{
+            con.exclui(Integer.toString(cod));
+            return true;
+        } catch(SQLException ex){
+            return false;
+        }
+    }
+    
+    public ArrayList<Estoque> ConsultaTodos(){
+        ArrayList<Estoque> Estoq = new ArrayList<>();
+        DAOEstoque con = new DAOEstoque();
+        try {
+            Estoq = (ArrayList<Estoque>) con.consultaTodos();
+        } catch (SQLException ex) {
+            
+        }
+        return Estoq;
+    }
+    
+    public ArrayList<Estoque> ConsultaCod(){
+        DAOEstoque c = new DAOEstoque();
+        ArrayList<Estoque> estoq = new ArrayList<>();
+        try {
+            estoq = (ArrayList<Estoque>)c.consultaCod(cod);
+        } catch (SQLException ex) {
+            
+        }
+        return estoq;
+    }
+
+    public ArrayList<Estoque> ConsultaDescricao(){
+        DAOEstoque c = new DAOEstoque();
+        ArrayList<Estoque> estoq = new ArrayList<>();
+            try {
+                estoq = (ArrayList<Estoque>) c.consultaDescricao(descricao);
+            } catch (SQLException ex) {
+                
+            }
+            return estoq;
+    }
     
 }
