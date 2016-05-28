@@ -31,6 +31,10 @@ public class Fornecedor extends PessoaJuridica{
         this.pedidominimo = pedidominimo;
         this.observacoes = observacoes;
     }
+
+    public Fornecedor() {
+        
+    }
     
    
     public String getPedidominimo() {
