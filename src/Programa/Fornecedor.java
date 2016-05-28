@@ -36,6 +36,14 @@ public class Fornecedor extends PessoaJuridica{
         
     }
     
+    public Fornecedor(String cnpj){
+        this.cnpj=cnpj;
+    }
+    
+    public Fornecedor (String razao, int i){
+        this.razaosocial=razao;
+    }
+    
    
     public String getPedidominimo() {
         return pedidominimo;
