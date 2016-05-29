@@ -51,6 +51,7 @@ import Programa.Venda;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -77,13 +78,15 @@ public class DAOVendas extends Conexao {
     }
     
     public int consultaNumero() throws SQLException{
+        int num = 0;
         conec();
-        int numero;
-        try (PreparedStatement pstm = con.prepareStatement("Select max(numero) as ultimonumero from vendas")) {
+        try (PreparedStatement pstm = con.prepareStatement("Select max(numero) as max from vendas")) {
             ResultSet rs = pstm.executeQuery();
-            numero = rs.getInt("ultimonumero");
+            if(rs.next()){
+                num = rs.getInt("max");
+            } 
         }
        close();
-       return numero;
+       return num;
     }
 }

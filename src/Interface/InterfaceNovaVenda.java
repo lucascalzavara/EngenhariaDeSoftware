@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Lucas Calzavara
  */
-public class NovaVenda extends javax.swing.JFrame {
+public class InterfaceNovaVenda extends javax.swing.JFrame {
 
     /**
      * Creates new form InterfaceVendas
@@ -27,9 +27,9 @@ public class NovaVenda extends javax.swing.JFrame {
     Estoque estoque = new Estoque();
     ArrayList<Estoque> estoq;
     
-    public NovaVenda() {
+    public InterfaceNovaVenda() {
         initComponents();
-        setTitle("Vendas");
+        setTitle("Nova Venda");
         todosProdutos();
         String data = "dd-MM-yyyy";
         String hora = "hh:mm - a";
@@ -888,21 +888,23 @@ public class NovaVenda extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceNovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceNovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceNovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceNovaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NovaVenda().setVisible(true);
+                new InterfaceNovaVenda().setVisible(true);
             }
         });
     }
