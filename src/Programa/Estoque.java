@@ -16,12 +16,7 @@ import java.util.ArrayList;
 public class Estoque {
               private int cod;
 
-    public Estoque(float aFloat, int aInt, int aInt0, String string, String string0, String string1, float aFloat0, String string2, String string3) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-   
-
+  
     public int getCod() {
         return cod;
     }

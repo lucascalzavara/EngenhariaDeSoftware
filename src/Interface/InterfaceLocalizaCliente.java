@@ -21,7 +21,7 @@ public class InterfaceLocalizaCliente extends javax.swing.JFrame {
      * Creates new form InterfaceLocalizaCliente
      */
     Venda venda;
-    InterfaceVendas inter;
+    NovaVenda inter;
     ArrayList<Cliente> clis;
     
     public InterfaceLocalizaCliente() {
@@ -29,11 +29,12 @@ public class InterfaceLocalizaCliente extends javax.swing.JFrame {
         consultarTodos();
     }
     
-    public InterfaceLocalizaCliente(Venda venda, InterfaceVendas inter) {
+    public InterfaceLocalizaCliente(Venda venda, NovaVenda inter) {
         initComponents();
         consultarTodos();
         this.venda=venda;
         this.inter=inter;
+        setTitle("Procurar Cliente");
     }
     
     private void preencherTabela(ArrayList<Cliente> clis) {

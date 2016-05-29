@@ -241,11 +241,11 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
         if (selecionada == -1){
             JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }else{
-            Estoque cli = new Estoque(Float.parseFloat((String) Tabela.getValueAt(selecionada, 1)), Integer.parseInt((String) Tabela.getValueAt(selecionada, 0)), 
+            /*Estoque cli = new Estoque(Float.parseFloat((String) Tabela.getValueAt(selecionada, 1)), Integer.parseInt((String) Tabela.getValueAt(selecionada, 0)), 
             Integer.parseInt((String) Tabela.getValueAt(selecionada, 2)), Tabela.getValueAt(selecionada, 3).toString(), Tabela.getValueAt(selecionada, 4).toString(), 
             Tabela.getValueAt(selecionada, 5).toString(),Float.parseFloat((String) Tabela.getValueAt(selecionada, 6)), Tabela.getValueAt(selecionada, 7).toString(),
             Tabela.getValueAt(selecionada, 8).toString());
-            new AlterarEstoque(cli, this).setVisible(true);          
+            new AlterarEstoque(cli, this).setVisible(true);    */      
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

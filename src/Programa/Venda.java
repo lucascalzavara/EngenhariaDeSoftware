@@ -5,8 +5,12 @@
  */
 package Programa;
 
+import DAO.DAOVendas;
 import Interface.InterfaceLocalizaCliente;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,11 +27,11 @@ public class Venda {
     String data;
     String hora;
     int numero;
-    float valortodal;
-    float desconto;
-    float valorfinal;
+    float valortotal=0;
+    float desconto=0;
+    float valorfinal=0;
     String adicional;
-    ArrayList<Estoque> pedido;
+    ArrayList<ItemPedido> pedido = new ArrayList<>();
 
     public Cliente getCliente() {
         return cliente;
@@ -110,11 +114,11 @@ public class Venda {
     }
 
     public float getValortodal() {
-        return valortodal;
+        return valortotal;
     }
 
     public void setValortodal(float valortodal) {
-        this.valortodal = valortodal;
+        this.valortotal = valortodal;
     }
 
     public float getDesconto() {
@@ -141,13 +145,90 @@ public class Venda {
         this.adicional = adicional;
     }
 
-    
-    
+    public ArrayList<ItemPedido> getPedido() {
+        return pedido;
+    }
 
-    public Venda() {
+    public boolean insereItemPedido(int quantidade, Estoque estoque){
+        if(verificaItemPedido(estoque.getCod())){
+            pedido.add(new ItemPedido(quantidade, estoque));
+            calculaValores();
+            return true;
+        }
+        return false;
     }
     
-    public void selecionaCliente(){
+    public void calculaValores(){
+        valortotal=0;
+        for (int i = 0; i < pedido.size(); i++){
+            valortotal+=pedido.get(i).valortotal;
+        }
+        if(desconto>valortotal)
+            desconto=0;
+        valorfinal=valortotal-desconto;
         
+        if(qtdparcela > 0){
+            valorparcela = valorfinal/qtdparcela;
+        }
+    }
+    
+    public boolean verificaItemPedido(int cod){
+        for (int i = 0; i < pedido.size(); i++)
+            if(pedido.get(i).getEstoque().getCod() == cod)
+                return false;
+        return true;
+    }
+    
+    public boolean removeItemPedido(int i){
+        if(i>=0 && i<pedido.size()){  
+            pedido.remove(i);
+            calculaValores();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean calculaDesconto(float desconto){
+        if(desconto<0 || desconto > valortotal)
+            return false;
+        else{
+            this.desconto=desconto;
+            calculaValores();
+            return true;
+        }
+    }
+    
+    public boolean calculaParcela(int qtd){
+        if(qtd < 1){
+            return false;
+        }else{
+            qtdparcela=qtd;
+            valorparcela=valorfinal/qtd;
+            return true;
+        }
+    }
+    
+    public void consultarNumero(){
+        DAOVendas con = new DAOVendas();
+        try {
+            numero=con.consultaNumero()+1;
+        } catch (SQLException ex) {
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public boolean vendaConfirma(){
+        DAOVendas con = new DAOVendas();
+        try {
+            con.insere(this);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public Venda() {
+        consultarNumero();
     }
 }

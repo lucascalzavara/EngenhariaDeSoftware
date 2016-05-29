@@ -16,7 +16,7 @@ create table vendas (
 	placaveiculo varchar(8),
 	cnpjtransportadora varchar(18),
 	data date not null,
-	hora varchar(8) not null,
+	hora varchar(10) not null,
 	numero int primary key,
 	valortotal float not null,
 	desconto float,
@@ -31,20 +31,59 @@ create table item_pedido(
 	codigoproduto int,
 	quantidade int not null,
 	valor float not null,
-	foreign key (numerovenda) references vendas (numero),
+	foreign key (numerovenda) references vendas (numero) on delete cascade,
 	foreign key (codigoproduto) references estoque (cod),
 	primary key (numerovenda, codigoproduto)
 );
+
+drop table item_pedido, vendas;
+
+select * from vendas;
+select * from item_pedido;
 
 
 */
 
 package DAO;
 
+
+import Programa.Venda;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Lucas Calzavara
  */
 public class DAOVendas extends Conexao {
+    public void insere (Venda v) throws SQLException{
+        up("insert into vendas (cnpjcliente, formapagamento, qtdparcelas, valorparcela, tipofrete, "+
+                "placaveiculo, cnpjtransportadora, data, hora, numero, valortotal, desconto, valorfinal, "+
+                "adicional) values ('"+v.getCliente().getCnpj()+"', '"+v.getFormapagamento()+"', "
+                + v.getQtdparcela()+", "+v.getValorparcela()+", '"+v.getTipofrete()+"', '"+
+                v.getPlacaveiculo()+"', '"+v.getCnpjtransportadora()+"','"+v.getData()+"', '"+v.getHora()+"', "
+                +v.getNumero()+", "+v.getValortodal()+", "+v.getDesconto()+", "+v.getValorfinal()+", "+
+                "'"+v.getAdicional()+"')");
+        for(int i = 0; i<v.getPedido().size(); i++){
+            up("insert into item_pedido (numerovenda, codigoproduto, quantidade, valor)"
+                    + "values ("+v.getNumero()+", "+v.getPedido().get(i).getEstoque().getCod()+","
+                    +v.getPedido().get(i).getQuantidade()+","+v.getPedido().get(i).getValortotal()+")");
+        }
+    }
     
+    public void exclui (String numero) throws SQLException{
+        up("delete from vendas where numero = "+numero);
+    }
+    
+    public int consultaNumero() throws SQLException{
+        conec();
+        int numero;
+        try (PreparedStatement pstm = con.prepareStatement("Select max(numero) as ultimonumero from vendas")) {
+            ResultSet rs = pstm.executeQuery();
+            numero = rs.getInt("ultimonumero");
+        }
+       close();
+       return numero;
+    }
 }
