@@ -5,8 +5,10 @@
  */
 package Interface;
 
+import Programa.Estoque;
 import Programa.Fornecedor;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,7 +37,7 @@ public class InserirEstoque extends javax.swing.JFrame {
         forn.removeAllItems();
         forn.addItem("Selecione");
         for (int r=0; r<c.size();r++) {
-            forn.addItem(c.get(r).getRazaosocial());
+            forn.addItem(c.get(r).getCnpj());
         }
     }
     
@@ -118,6 +120,11 @@ public class InserirEstoque extends javax.swing.JFrame {
         jLabel9.setText("Observações:");
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Marca:");
 
@@ -231,7 +238,18 @@ public class InserirEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_fornActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        if ( (descri.getText().equals("")) ) {
+            JOptionPane.showMessageDialog(null, "Campos obrigatórios não preenchidos.");
+        }else{
+            Estoque c = new Estoque(Integer.parseInt(cod.getText()),Float.parseFloat(valor.getText()), Integer.parseInt(qtd.getText()), Integer.parseInt(cdbarra.getText()), marca.getText(), descri.getText(), forn.getSelectedItem().toString(),Float.parseFloat(preco.getText()),un.getText(),obs.getText());
+            if(c.insere()){
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+                inter.consultarTodos();
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorActionPerformed
@@ -245,6 +263,10 @@ public class InserirEstoque extends javax.swing.JFrame {
     private void marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_marcaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /*
      * @param args the command line arguments
