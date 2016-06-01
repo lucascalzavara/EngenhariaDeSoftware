@@ -44,20 +44,28 @@ public class Cliente extends PessoaJuridica {
   
     public boolean insere(){
         DAOCliente con = new DAOCliente();
-        try {
-            con.insere(this);
-            return true;
-        } catch (SQLException ex) {
+        if(validaDados()){
+            try {
+                con.insere(this);
+                return true;
+            } catch (SQLException ex) {
+                return false;
+            }
+        }else{
             return false;
         }
     }
     
     public boolean altera(){
         DAOCliente con = new DAOCliente();
-        try {
-            con.atualiza(this);
-            return true;
-        } catch (SQLException ex) {
+        if(validaDados()){
+            try {
+                con.atualiza(this);
+                return true;
+            } catch (SQLException ex) {
+                return false;
+            }
+        }else{
             return false;
         }
     }
@@ -104,7 +112,5 @@ public class Cliente extends PessoaJuridica {
             }
             return forn;
     }
-    
-    
     
 }

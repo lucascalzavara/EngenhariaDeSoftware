@@ -1,10 +1,11 @@
-ï»¿ManutenÃ§Ã£o
+Manutenção
 12-05-2016 - 2h10m - Todos
 18-05-2016 - 1h25m - Lucas
 19-05-2016 - 1h15m - Lucas / Gabriel
 24-05-2016 - 1h40m - Lucas
 24-05-2016 - 1h30m - Michel
 25-05-2016 - 1h30m - Todos
+31-05-2016 - 1h35m - Lucas
 
 Sprint 3
 20-05-2016 - 1h00m - Gabriel
@@ -15,3 +16,4 @@ Sprint 3
 29-05-2016 - 1h05m - Lucas
 29-05-2016 - 1h30m - Lucas
 29-05-2016 - 0h20m - Lucas
+31-25-2016 - 3h30m - Lucas

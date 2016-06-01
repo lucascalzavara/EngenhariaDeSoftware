@@ -23,14 +23,24 @@ public class PessoaJuridica {
     String uf;
     String observacoes;
 
-    public  boolean validaCnpj(String campo){
-        String cep = "\\d\\d.\\d\\d\\d.\\d\\d\\d/\\d\\d\\d\\d-\\d\\d";
-       return campo.matches(cep);
+    public boolean validaDados(){
+        if(!cnpj.matches("[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}"))
+            return false;
+        if(!inscricaoestadual.isEmpty())
+            if(!inscricaoestadual.matches("[0-9]+"))
+                return false;
+        if(!telefone.isEmpty()||!telefone.equals("(  )    -    "))
+            if(!telefone.matches("\\([0-9]{2}\\)[0-9]{4}-[0-9]{4}"))
+                return false;
+        if(!numero.matches("[0-9]+"))
+            return false;
+        if(!cidade.matches("[a-zA-Z]+"))
+            return false;
+        if(!uf.matches("[A-Z]{2}"))
+            return false;
+        return true;
     }
-    public  boolean validaUf(String campo){
-        String cep = "\\s\\s";
-       return campo.matches(cep);
-}
+    
     public String getCnpj() {
         return cnpj;
     }

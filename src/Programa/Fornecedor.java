@@ -31,6 +31,17 @@ public class Fornecedor extends PessoaJuridica{
         this.pedidominimo = pedidominimo;
         this.observacoes = observacoes;
     }
+    
+    @Override
+    public boolean validaDados(){
+        if(super.validaDados()){
+            if(pedidominimo.isEmpty())
+                return pedidominimo.matches("[0-9]+,[0-9]{2}");
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public Fornecedor() {
         
@@ -55,20 +66,28 @@ public class Fornecedor extends PessoaJuridica{
     
     public boolean insere(){
         DAOFornecedor con = new DAOFornecedor();
-        try {
-            con.insere(this);
-            return true;
-        } catch (SQLException ex) {
+        if(validaDados()){
+            try {
+                con.insere(this);
+                return true;
+            } catch (SQLException ex) {
+                return false;
+            }
+        }else{
             return false;
         }
     }
     
     public boolean altera(){
         DAOFornecedor con = new DAOFornecedor();
-        try {
-            con.atualiza(this);
-            return true;
-        } catch (SQLException ex) {
+        if(validaDados()){
+            try {
+                con.atualiza(this);
+                return true;
+            } catch (SQLException ex) {
+                return false;
+            }
+        }else{
             return false;
         }
     }
