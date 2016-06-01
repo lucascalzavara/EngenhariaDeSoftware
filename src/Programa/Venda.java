@@ -33,6 +33,21 @@ public class Venda {
     String adicional;
     ArrayList<ItemPedido> pedido = new ArrayList<>();
 
+    public Venda(Cliente cliente, String formapagamento, int qtdparcela, String tipofrete, String placaveiculo, String cnpjtransportadora, String data, String hora, int numero, String adicional, float descontos) {
+        this.cliente = cliente;
+        this.formapagamento = formapagamento;
+        this.qtdparcela = qtdparcela;
+        this.tipofrete = tipofrete;
+        this.placaveiculo = placaveiculo;
+        this.cnpjtransportadora = cnpjtransportadora;
+        this.data = data;
+        this.hora = hora;
+        this.numero = numero;
+        this.adicional = adicional;
+        this.desconto=descontos;
+    }
+    
+
     public Venda(Cliente cliente, String formapagamento, int qtdparcela, float valorparcela, String tipofrete, String placaveiculo, String cnpjtransportadora, String data, String hora, int numero, String adicional, float desconto, float valortotal, float valorfinal) {
         this.cliente = cliente;
         this.formapagamento = formapagamento;
@@ -319,6 +334,27 @@ public class Venda {
         } catch (SQLException ex) {
             return false;
         }
+    }
+    
+    public boolean validaDados(){
+        if(cliente==null){
+            return false;
+        }
+/*
+        String formapagamento;
+        int qtdparcela;
+        float valorparcela;
+        String tipofrete;
+        String placaveiculo;
+        String cnpjtransportadora;
+        String data;
+        String hora;
+        int numero;
+        float valortotal=0;
+        float desconto=0;
+        float valorfinal=0;
+        String adicional;*/
+        return true;
     }
     
     

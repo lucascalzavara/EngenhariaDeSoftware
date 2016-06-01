@@ -47,18 +47,19 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
     }
     public void preencherTabela(ArrayList<Estoque> clis){
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new String[]{"Valor", "Quantidade", "Código Barra", "Marca", "Descrição", "Fornecedor", "Preço Custo", "Unidade", "Observações"});
+        modelo.setColumnIdentifiers(new String[]{"Código","Valor", "Quantidade", "Código Barra", "Marca", "Descrição", "Fornecedor", "Preço Custo", "Unidade", "Observações"});
         Object[] fila = new Object[modelo.getColumnCount()];
         for (int i = 0; i < clis.size(); i++) {
-            fila[0] = clis.get(i).getValor();
-            fila[1] = clis.get(i).getQtd();
-            fila[2] = clis.get(i).getCdbarra();
-            fila[3] = clis.get(i).getMarca();
-            fila[4] = clis.get(i).getDescricao();
-            fila[5] = clis.get(i).getFornecedor();
-            fila[6] = clis.get(i).getPrecocusto();
-            fila[7] = clis.get(i).getUn();
-            fila[8] = clis.get(i).getObs();
+            fila[0] = clis.get(i).getCod();
+            fila[1] = clis.get(i).getValor();
+            fila[2] = clis.get(i).getQtd();
+            fila[3] = clis.get(i).getCdbarra();
+            fila[4] = clis.get(i).getMarca();
+            fila[5] = clis.get(i).getDescricao();
+            fila[6] = clis.get(i).getFornecedor();
+            fila[7] = clis.get(i).getPrecocusto();
+            fila[8] = clis.get(i).getUn();
+            fila[9] = clis.get(i).getObs();
             modelo.addRow(fila);
         }
         Tabela.setModel(modelo);
