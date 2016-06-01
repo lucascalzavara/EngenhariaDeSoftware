@@ -8,6 +8,9 @@ package Programa;
 import DAO.DAOEstoque;
 import DAO.DAOVendas;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -265,14 +268,18 @@ public class Venda {
     }
     
     public boolean vendaConfirma(){
-        DAOVendas con = new DAOVendas();
-        DAOEstoque est = new DAOEstoque();
-        try {
-            atualizaEstoque();
-            con.insere(this);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        if(validaDados()){
+            DAOVendas con = new DAOVendas();
+            DAOEstoque est = new DAOEstoque();
+            try {
+                atualizaEstoque();
+                con.insere(this);
+                return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }else{
             return false;
         }
     }
@@ -337,23 +344,53 @@ public class Venda {
     }
     
     public boolean validaDados(){
-        if(cliente==null){
+        if(cliente.getCnpj().isEmpty()){
             return false;
         }
-/*
-        String formapagamento;
-        int qtdparcela;
-        float valorparcela;
-        String tipofrete;
-        String placaveiculo;
-        String cnpjtransportadora;
-        String data;
-        String hora;
-        int numero;
-        float valortotal=0;
-        float desconto=0;
-        float valorfinal=0;
-        String adicional;*/
+        if(!formapagamento.equals("À Vista") && !formapagamento.equals("Parcelado")){
+            return false;
+        }
+        if(qtdparcela<0){
+            return false;
+        }
+        if(valorparcela<0){
+            return false;
+        }
+        if(!tipofrete.equals("Destinatário/Remetente") && !tipofrete.equals("Emitente") && !tipofrete.equals("Terceiros")){
+            return false;
+        }
+        if(!placaveiculo.matches("[A-Z]{3}-[0-9]{4}") && !placaveiculo.isEmpty()){
+            return false;
+        }
+        if(!cnpjtransportadora.matches("[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}") && !cnpjtransportadora.isEmpty()){
+            return false;
+        }
+        DateFormat df = new SimpleDateFormat ("dd-MM-yyyy");
+        df.setLenient (false);
+        try {
+            df.parse (data);
+        } catch (ParseException ex) {
+            return false;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm - a");
+        sdf.setLenient(false);
+        try{
+            sdf.parse(hora);
+        }catch(ParseException e){
+            return false;
+        } 
+        if(numero<1){
+            return false;
+        }
+        if(valortotal<0){
+            return false;
+        }
+        if(desconto<0 || desconto > valortotal){
+            return false;
+        }
+        if(valorfinal<=0 || valorfinal!=valortotal-desconto){
+            return false;
+        }
         return true;
     }
     

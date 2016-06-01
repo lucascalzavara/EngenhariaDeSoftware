@@ -50,7 +50,7 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
         modelo.setColumnIdentifiers(new String[]{"Código","Valor", "Quantidade", "Código Barra", "Marca", "Descrição", "Fornecedor", "Preço Custo", "Unidade", "Observações"});
         Object[] fila = new Object[modelo.getColumnCount()];
         for (int i = 0; i < clis.size(); i++) {
-            fila[0] = clis.get(i).getCod();
+            fila[0]=clis.get(i).getCod();
             fila[1] = clis.get(i).getValor();
             fila[2] = clis.get(i).getQtd();
             fila[3] = clis.get(i).getCdbarra();
@@ -142,33 +142,30 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(descri, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                    .addComponent(cod))
+                .addGap(46, 46, 46)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(descri, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1343, Short.MAX_VALUE)))
+                        .addComponent(jButton2)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton3)
+                        .addGap(31, 31, 31)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1282, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,19 +173,21 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(descri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(descri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
                     .addComponent(jButton5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         pack();
@@ -243,11 +242,11 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
         if (selecionada == -1){
             JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }else{
-            /*Estoque cli = new Estoque(Float.parseFloat((String) Tabela.getValueAt(selecionada, 1)), Integer.parseInt((String) Tabela.getValueAt(selecionada, 0)), 
-            Integer.parseInt((String) Tabela.getValueAt(selecionada, 2)), Tabela.getValueAt(selecionada, 3).toString(), Tabela.getValueAt(selecionada, 4).toString(), 
-            Tabela.getValueAt(selecionada, 5).toString(),Float.parseFloat((String) Tabela.getValueAt(selecionada, 6)), Tabela.getValueAt(selecionada, 7).toString(),
-            Tabela.getValueAt(selecionada, 8).toString());
-            new AlterarEstoque(cli, this).setVisible(true);    */      
+            Estoque cli = new Estoque(Integer.parseInt((String) Tabela.getValueAt(selecionada, 0)), Float.parseFloat((String) Tabela.getValueAt(selecionada, 1)), 
+            Integer.parseInt((String) Tabela.getValueAt(selecionada, 2)), Integer.parseInt((String) Tabela.getValueAt(selecionada, 3)), Tabela.getValueAt(selecionada, 4).toString(), 
+            Tabela.getValueAt(selecionada, 5).toString(),Tabela.getValueAt(selecionada, 6).toString(), Float.parseFloat((String) Tabela.getValueAt(selecionada, 7)),
+            Tabela.getValueAt(selecionada, 8).toString(),Tabela.getValueAt(selecionada,9).toString());
+            new AlterarEstoque(cli, this).setVisible(true);          
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

@@ -902,7 +902,7 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
         }else{
             placaveiculo.setEnabled(true);
             cnpjtrans.setEnabled(true);
-        }            
+        }
     }//GEN-LAST:event_fretecomboActionPerformed
 
     private void descontosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descontosActionPerformed

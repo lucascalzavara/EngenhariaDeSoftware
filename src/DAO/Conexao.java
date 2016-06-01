@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class Conexao {
     private final String nome = "postgres";
-    private final String senha = "lucas";
+    private final String senha = "root";
     private final String url = "jdbc:postgresql://localhost/postgres";
     private final String driver = "org.postgresql.Driver";
     Connection con;
