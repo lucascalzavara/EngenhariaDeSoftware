@@ -26,6 +26,7 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
     Venda venda = new Venda();
     Estoque estoque = new Estoque();
     ArrayList<Estoque> estoq;
+    InterfaceVendas inter;
     
     public InterfaceNovaVenda() {
         initComponents();
@@ -44,6 +45,60 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
         venda.setData(data1);
         venda.setHora(hora1);
         numeroped.setText(String.valueOf(venda.getNumero()));
+    }
+    
+    public InterfaceNovaVenda(InterfaceVendas inter) {
+        initComponents();
+        setTitle("Nova Venda");
+        todosProdutos();
+        String data = "dd-MM-yyyy";
+        String hora = "hh:mm - a";
+        String data1, hora1;
+        java.util.Date agora = new java.util.Date();;
+        SimpleDateFormat formata = new SimpleDateFormat(data);
+        data1 = formata.format(agora);
+        formata = new SimpleDateFormat(hora);
+        hora1 = formata.format(agora);
+        dataped.setText(data1);
+        horaped.setText(hora1);
+        venda.setData(data1);
+        venda.setHora(hora1);
+        numeroped.setText(String.valueOf(venda.getNumero()));
+        this.inter=inter;
+    }
+      
+    public void visualizacao(Venda v){
+        setTitle("Visualização");
+        venda=v;
+        qtdparcelas.setText(String.valueOf(venda.getQtdparcela()));
+        valorparcela.setText(String.valueOf(venda.getValorparcela()));
+        placaveiculo.setText(venda.getPlacaveiculo());
+        cnpjtrans.setText(venda.getCnpjtransportadora());
+        dataped.setText(venda.getData());
+        horaped.setText(venda.getHora());
+        numeroped.setText(String.valueOf(venda.getNumero()));
+        valortotal.setText(String.valueOf(venda.getValortodal()));
+        valorfinal.setText(String.valueOf(venda.getValortodal()));
+        descontos.setText(String.valueOf(venda.getDesconto()));
+        adicional.setText(venda.getAdicional());
+        formapagamento.setSelectedItem(venda.getFormapagamento());
+        fretecombo.setSelectedItem(venda.getTipofrete());
+        preencheCliente();
+        preencherTabelaPedido();
+        jButton1.setVisible(false);
+        quantidade.setVisible(false);
+        jButton3.setVisible(false);
+        jButton5.setVisible(false);
+        jLabel14.setVisible(false);
+        fretecombo.setEnabled(false);
+        formapagamento.setEnabled(false);
+        descontos.setEnabled(false);
+        jButton4.setEnabled(false);
+        adicional.setEnabled(false);
+        jButton6.setVisible(false);
+        qtdparcelas.setEnabled(false);
+        placaveiculo.setEnabled(false);
+        cnpjtrans.setEnabled(false);
     }
     
     public void preencheCliente(){
@@ -206,7 +261,7 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel32 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        adicional = new javax.swing.JTextArea();
         jSeparator4 = new javax.swing.JSeparator();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -332,7 +387,7 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
 
         jLabel17.setText("Forma Pagamento:");
 
-        formapagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "À Vista", "À Prazo", "Parcelado" }));
+        formapagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "À Vista", "Parcelado" }));
         formapagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formapagamentoActionPerformed(evt);
@@ -417,9 +472,9 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
         jLabel32.setForeground(new java.awt.Color(204, 0, 0));
         jLabel32.setText("Dados Adicionais:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        adicional.setColumns(20);
+        adicional.setRows(5);
+        jScrollPane3.setViewportView(adicional);
 
         jButton6.setText("Confirmar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -543,9 +598,9 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
                                 .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(qtdparcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(qtdparcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
                                 .addComponent(parcelasok)))
                         .addGap(68, 68, 68)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -701,7 +756,6 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(qtdparcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22)
                     .addComponent(placaveiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26)
@@ -709,7 +763,8 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
                     .addComponent(jLabel30)
                     .addComponent(descontos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4)
-                    .addComponent(parcelasok))
+                    .addComponent(parcelasok)
+                    .addComponent(qtdparcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -794,23 +849,27 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int selecionado = tabelabusca.getSelectedRow();
-        if(selecionado == -1){
-            JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
-        }else if (quantidade.getText().isEmpty() || Integer.parseInt(quantidade.getText()) < 1){
-            JOptionPane.showMessageDialog(null, "Quantidade invalida", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
-            quantidade.setText(null);
-        }else if (Integer.parseInt(quantidade.getText()) > estoq.get(selecionado).getQtd()){
-            JOptionPane.showMessageDialog(null, "Quantidade indiponivel", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
-            quantidade.setText(null);
-        }else if (venda.insereItemPedido(Integer.parseInt(quantidade.getText()), estoq.get(selecionado))){
-            preencherTabelaPedido();
-            quantidade.setText(null);
-            valortotal.setText(String.valueOf(venda.getValortodal()));
-            valorfinal.setText(String.valueOf(venda.getValorfinal()));
-            valorparcela.setText(String.valueOf(venda.getValorparcela()));
-            descontos.setText(String.valueOf(venda.getDesconto()));
-        }else{
-            JOptionPane.showMessageDialog(null, "Item repedido", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+        try{
+            if(selecionado == -1){
+                JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            }else if (quantidade.getText().isEmpty() || Integer.parseInt(quantidade.getText()) < 1){
+                JOptionPane.showMessageDialog(null, "Quantidade invalida", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+                quantidade.setText(null);
+            }else if (Integer.parseInt(quantidade.getText()) > estoq.get(selecionado).getQtd()){
+                JOptionPane.showMessageDialog(null, "Quantidade indiponivel", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+                quantidade.setText(null);
+            }else if (venda.insereItemPedido(Integer.parseInt(quantidade.getText()), estoq.get(selecionado))){
+                preencherTabelaPedido();
+                quantidade.setText(null);
+                valortotal.setText(String.valueOf(venda.getValortodal()));
+                valorfinal.setText(String.valueOf(venda.getValorfinal()));
+                valorparcela.setText(String.valueOf(venda.getValorparcela()));
+                descontos.setText(String.valueOf(venda.getDesconto()));
+            }else{
+                JOptionPane.showMessageDialog(null, "Item repedido", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            }
+        } catch(NumberFormatException  ex){
+            JOptionPane.showMessageDialog(null, "Não é um valor válido", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -863,11 +922,25 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_qtdparcelasActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if(venda.vendaConfirma()){
-            JOptionPane.showMessageDialog(null, "Venda realizada com sucesso");
-            dispose();
+        if(venda.getCliente()==null){
+            JOptionPane.showMessageDialog(null, "Selecionoe um cliente", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+        }else if(venda.getPedido().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Pedido vazio", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+        }else if(formapagamento.getSelectedItem().equals("Parcelado") && venda.getQtdparcela()<1){
+            JOptionPane.showMessageDialog(null, "Informe a quantidade de Parcelas", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }else{
-            JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            venda.setAdicional(adicional.getText());
+            venda.setCnpjtransportadora(cnpjtrans.getText());
+            venda.setPlacaveiculo(placaveiculo.getText());
+            venda.setTipofrete((String) fretecombo.getSelectedItem());
+            venda.setFormapagamento((String) formapagamento.getSelectedItem());
+            if(venda.vendaConfirma()){
+                JOptionPane.showMessageDialog(null, "Venda realizada com sucesso");
+                inter.consultarTodos();
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -910,6 +983,7 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea adicional;
     private javax.swing.JTextField bairro;
     private javax.swing.JTextField cidade;
     private javax.swing.JTextField cnpj;
@@ -967,7 +1041,6 @@ public class InterfaceNovaVenda extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField nome;
     private javax.swing.JTextField numero;
     private javax.swing.JFormattedTextField numeroped;

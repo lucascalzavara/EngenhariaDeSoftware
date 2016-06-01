@@ -5,6 +5,11 @@
  */
 package Interface;
 
+import Programa.Venda;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Lucas Calzavara
@@ -14,9 +19,35 @@ public class InterfaceVendas extends javax.swing.JFrame {
     /**
      * Creates new form InterfaceVendas
      */
+    
+    ArrayList<Venda> vendas = null;
+    
+    
     public InterfaceVendas() {
         initComponents();
         setTitle("Vendas");
+        consultarTodos();
+    }
+    
+    public void consultarTodos(){
+        vendas = new Venda().consultaTodos();
+        preencherTabela();
+    }
+    
+    public void preencherTabela(){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new String[]{"Número","Cliente", "Data", "Hora", "Valor", "Forma Pagamento"});
+        Object[] fila = new Object[modelo.getColumnCount()];
+        for (int i = 0; i < vendas.size(); i++) {
+            fila[0] = vendas.get(i).getNumero();
+            fila[1] = vendas.get(i).getCliente().getRazaosocial();
+            fila[2] = vendas.get(i).getData();
+            fila[3] = vendas.get(i).getHora();
+            fila[4] = vendas.get(i).getValorfinal();
+            fila[5] = vendas.get(i).getFormapagamento();
+            modelo.addRow(fila);
+        }
+        tabela.setModel(modelo);
     }
 
     /**
@@ -29,20 +60,20 @@ public class InterfaceVendas extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        num = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        razao = new javax.swing.JFormattedTextField();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -50,7 +81,7 @@ public class InterfaceVendas extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
         jButton1.setText("Novo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -60,14 +91,29 @@ public class InterfaceVendas extends javax.swing.JFrame {
         });
 
         jButton2.setText("Excluir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Número:");
 
         jLabel2.setText("Razão Social Cliente:");
 
         jButton3.setText("Consultar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Alterar");
+        jButton4.setText("Visualizar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Fechar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -87,11 +133,11 @@ public class InterfaceVendas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(num, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(razao, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)
                         .addGap(0, 750, Short.MAX_VALUE))
@@ -111,9 +157,9 @@ public class InterfaceVendas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(razao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,12 +176,58 @@ public class InterfaceVendas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new InterfaceNovaVenda().setVisible(true);
+        new InterfaceNovaVenda(this).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(num.getText().isEmpty() && razao.getText().isEmpty()){
+            consultarTodos();
+        }else if (razao.getText().isEmpty()){
+            try{
+                vendas = new Venda(Integer.valueOf(num.getText())).consultaNumero();
+                preencherTabela();
+                num.setText(null);
+            } catch(NumberFormatException  ex){
+                JOptionPane.showMessageDialog(null, "Não é um valor válido", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            }
+        }else{
+            vendas = new Venda(razao.getText()).consultaCliente();
+            preencherTabela();
+            razao.setText(null);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int selecionado = tabela.getSelectedRow();
+        if(selecionado == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+        }else{
+            if(vendas.get(selecionado).exclui()){
+                JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+                consultarTodos();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int selecionado = tabela.getSelectedRow();
+        if(selecionado == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
+        }else{
+            Venda vend = vendas.get(selecionado);
+            vend.consultaPedido();
+            InterfaceNovaVenda v = new InterfaceNovaVenda();
+            v.visualizacao(vend);
+            v.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,11 +270,11 @@ public class InterfaceVendas extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JFormattedTextField num;
+    private javax.swing.JFormattedTextField razao;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

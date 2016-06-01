@@ -130,9 +130,9 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="qtdparcelas" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="qtdparcelas" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               <Component id="parcelasok" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -323,7 +323,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="qtdparcelas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="placaveiculo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -332,6 +331,7 @@
                   <Component id="descontos" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="parcelasok" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="qtdparcelas" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -594,10 +594,9 @@
     <Component class="javax.swing.JComboBox" name="formapagamento">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="2">
             <StringItem index="0" value="&#xc0; Vista"/>
-            <StringItem index="1" value="&#xc0; Prazo"/>
-            <StringItem index="2" value="Parcelado"/>
+            <StringItem index="1" value="Parcelado"/>
           </StringArray>
         </Property>
       </Properties>
@@ -790,7 +789,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextArea1">
+        <Component class="javax.swing.JTextArea" name="adicional">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>

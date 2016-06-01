@@ -5,8 +5,8 @@
  */
 package Programa;
 
+import DAO.DAOEstoque;
 import DAO.DAOVendas;
-import Interface.InterfaceLocalizaCliente;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -32,6 +32,32 @@ public class Venda {
     float valorfinal=0;
     String adicional;
     ArrayList<ItemPedido> pedido = new ArrayList<>();
+
+    public Venda(Cliente cliente, String formapagamento, int qtdparcela, float valorparcela, String tipofrete, String placaveiculo, String cnpjtransportadora, String data, String hora, int numero, String adicional, float desconto, float valortotal, float valorfinal) {
+        this.cliente = cliente;
+        this.formapagamento = formapagamento;
+        this.qtdparcela = qtdparcela;
+        this.valorparcela = valorparcela;
+        this.tipofrete = tipofrete;
+        this.placaveiculo = placaveiculo;
+        this.cnpjtransportadora = cnpjtransportadora;
+        this.data = data;
+        this.hora = hora;
+        this.numero = numero;
+        this.adicional = adicional;
+        this.desconto=desconto;
+        this.valorfinal=valorfinal;
+        this.valortotal=valortotal;
+    }
+    
+    public Venda(int numero){
+        this.numero=numero;
+    }
+    
+    public Venda (String razaoSocial){
+        this.cliente = new Cliente(razaoSocial, 1);
+    }
+    
 
     public Cliente getCliente() {
         return cliente;
@@ -149,6 +175,12 @@ public class Venda {
         return pedido;
     }
 
+    public void setPedido(ArrayList<ItemPedido> pedido) {
+        this.pedido = pedido;
+    }
+    
+    
+
     public boolean insereItemPedido(int quantidade, Estoque estoque){
         if(verificaItemPedido(estoque.getCod())){
             pedido.add(new ItemPedido(quantidade, estoque));
@@ -219,7 +251,9 @@ public class Venda {
     
     public boolean vendaConfirma(){
         DAOVendas con = new DAOVendas();
+        DAOEstoque est = new DAOEstoque();
         try {
+            atualizaEstoque();
             con.insere(this);
             return true;
         } catch (SQLException ex) {
@@ -227,6 +261,67 @@ public class Venda {
             return false;
         }
     }
+    
+    public void atualizaEstoque() throws SQLException{
+        DAOEstoque e = new DAOEstoque();
+        for(int i = 0; i<pedido.size(); i++){
+            e.atualizaQuantidade(pedido.get(i).getEstoque().getCod(), pedido.get(i).getEstoque().getQtd()-pedido.get(i).getQuantidade());
+        }
+    }
+    
+    public ArrayList<Venda> consultaTodos(){
+        DAOVendas v = new DAOVendas();
+        ArrayList<Venda> vendas = null;
+        try{
+            vendas = v.consultaTodos();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vendas;
+    }
+    
+    public ArrayList<Venda> consultaNumero(){
+        DAOVendas v = new DAOVendas();
+        ArrayList<Venda> vendas = null;
+        try {
+            vendas = v.consultaNumero(numero);
+        } catch (SQLException ex) {
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vendas;
+    }
+    
+    public ArrayList<Venda> consultaCliente(){
+        DAOVendas v = new DAOVendas();
+        ArrayList<Venda> vendas = null;
+        try{
+            vendas = v.consultaCliente(cliente.getRazaosocial());
+        } catch (SQLException ex){
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vendas;
+    }
+    
+    public void consultaPedido(){
+        DAOVendas v = new DAOVendas();
+        try {
+            pedido = v.consultaPedido(numero);
+        } catch (SQLException ex) {
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public boolean exclui(){
+        DAOVendas v = new DAOVendas();
+        try {
+            v.exclui(numero);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+    
+    
 
     public Venda() {
         consultarNumero();

@@ -44,6 +44,12 @@ public class ItemPedido {
         this.valortotal = quantidade*estoque.getValor();
     }
 
+    public ItemPedido(int quantidade, float valortotal, Estoque estoque) {
+        this.quantidade = quantidade;
+        this.valortotal = valortotal;
+        this.estoque = estoque;
+    }
+
     
     
     
