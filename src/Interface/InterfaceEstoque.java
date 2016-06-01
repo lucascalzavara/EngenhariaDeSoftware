@@ -194,20 +194,13 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DAOEstoque c= new DAOEstoque();
-        if (cod.getText().isEmpty() && descri.getText().isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Prencha o CNPJ ou Razão Social.");
+    
+         if (cod.getText().isEmpty() && descri.getText().isEmpty()) {
             consultarTodos();
         }
-        else if (cod.getText().isEmpty()) {
-            ArrayList<Estoque> clis = new ArrayList<>();
-             try {
-                clis = (ArrayList<Estoque>)c.consultaCod(Integer.parseInt(cod.getText()));
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
-                cod.setText(null);
-                return;
-            }
+        else if(descri.getText().isEmpty()){
+            Estoque c = new Estoque (Integer.parseInt(cod.getText()));
+            ArrayList<Estoque> clis = c.ConsultaCod();
             if(clis.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 cod.setText(null);
@@ -215,15 +208,10 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
             }
             preencherTabela(clis);
             cod.setText(null);
-        }
-        else {
-            ArrayList<Estoque> clis = new ArrayList<>();
             
-            try {
-                clis = (ArrayList<Estoque>) c.consultaDescricao(descri.getText());
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro");
-            }
+        }else{
+            Estoque c = new Estoque(descri.getText());
+            ArrayList<Estoque> clis = c.ConsultaDescricao();
             if( clis.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Não encontrado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
                 return;        
@@ -242,9 +230,9 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
         if (selecionada == -1){
             JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }else{
-            Estoque cli = new Estoque(Integer.parseInt((String) Tabela.getValueAt(selecionada, 0)), Float.parseFloat((String) Tabela.getValueAt(selecionada, 1)), 
-            Integer.parseInt((String) Tabela.getValueAt(selecionada, 2)), Integer.parseInt((String) Tabela.getValueAt(selecionada, 3)), Tabela.getValueAt(selecionada, 4).toString(), 
-            Tabela.getValueAt(selecionada, 5).toString(),Tabela.getValueAt(selecionada, 6).toString(), Float.parseFloat((String) Tabela.getValueAt(selecionada, 7)),
+            Estoque cli = new Estoque(Integer.parseInt(Tabela.getValueAt(selecionada, 0).toString()), Float.parseFloat(Tabela.getValueAt(selecionada, 1).toString()), 
+            Integer.parseInt(Tabela.getValueAt(selecionada, 2).toString()), Integer.parseInt(Tabela.getValueAt(selecionada, 3).toString()),Tabela.getValueAt(selecionada, 4).toString(), 
+            Tabela.getValueAt(selecionada, 5).toString(),Tabela.getValueAt(selecionada, 6).toString(), Float.parseFloat(Tabela.getValueAt(selecionada, 7).toString()),
             Tabela.getValueAt(selecionada, 8).toString(),Tabela.getValueAt(selecionada,9).toString());
             new AlterarEstoque(cli, this).setVisible(true);          
         }
@@ -255,10 +243,10 @@ public final class InterfaceEstoque extends javax.swing.JFrame {
         if (selecionada == -1){
             JOptionPane.showMessageDialog(null, "Nenhum selecionado", "Mensagem", JOptionPane.ERROR_MESSAGE, null);
         }else{
-            String str = Tabela.getValueAt(selecionada, 1).toString();
+            String str = Tabela.getValueAt(selecionada, 0).toString();
             DAOEstoque c = new DAOEstoque();
             try {
-                c.exclui(str);
+                c.exclui(Integer.parseInt(str));
                 JOptionPane.showMessageDialog(null, "Excluido com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE, null);
                 
             } catch (SQLException ex) {
