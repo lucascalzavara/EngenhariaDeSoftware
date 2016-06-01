@@ -16,39 +16,19 @@ import java.util.List;
  *
  * @author Lucas Calzavara
  */
-
-/*
-CREATE TABLE public.estoque
-(
-  cod integer NOT NULL,
-  valor double precision NOT NULL,
-  qtd integer NOT NULL,
-  cdbarra integer,
-  marca character varying(30) NOT NULL,
-  descricao character varying(100),
-  fornecedor character varying(19) NOT NULL,
-  precocusto double precision,
-  un character(3) NOT NULL,
-  obs character(200),
-  CONSTRAINT estoque_pkey PRIMARY KEY (cod),
-  CONSTRAINT estoque_fornecedor_fkey FOREIGN KEY (fornecedor)
-      REFERENCES public.fornecedor (cnpj) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-*/
 public class DAOEstoque extends Conexao{
         
     public void insere(Estoque c) throws SQLException{
         up("insert into estoque (cod,valor,qtd,cdbarra,marca,descricao,fornecedor,precocusto,un,obs) values ("+c.getCod()+", "+c.getValor()+", "+c.getQtd()+", "+c.getCdbarra()+", '"+c.getMarca()+"', '"+c.getDescricao()+"', '"+c.getFornecedor()+"', "+c.getPrecocusto()+", '"+c.getUn()+"', '"+c.getObs()+"')");
     }
     
-    public void exclui(String cod) throws SQLException{
+    public void exclui(int cod) throws SQLException{
         up("delete from estoque where cod = "+cod);
     }
     
     public void atualiza(Estoque c) throws SQLException{
         up("update estoque set valor ="+c.getValor()+
-                ", qtd = "+c.getQtd()+", fornecedor = '"
+                ", qtd = "+c.getQtd()+",un = '"+c.getUn()+"',descricao = '"+c.getDescricao()+"',marca = '" +c.getMarca()+"',cdbarra = "+c.getCdbarra()+",fornecedor = '"
                 +c.getFornecedor()+"', precocusto ="+c.getPrecocusto()+", obs = '"+c.getObs()+
                 "' where cod = "+c.getCod()+";");
     }
@@ -69,7 +49,7 @@ public class DAOEstoque extends Conexao{
     public List<Estoque> consultaDescricao(String str) throws SQLException{
         List<Estoque> estoq = new ArrayList<>();
         conec();
-        try (PreparedStatement pstm = con.prepareStatement("Select * from estoque where descricao like '"+str+"%' order by razaosocial")) {
+        try (PreparedStatement pstm = con.prepareStatement("Select * from estoque where descricao like '"+str+"%' order by descricao")) {
             ResultSet rs = pstm.executeQuery();
             while(rs.next()){
                Estoque cli = new Estoque(rs.getInt("cod"), rs.getFloat("valor"), rs.getInt("qtd"), rs.getInt("cdbarra"), rs.getString("marca"), rs.getString("descricao"), rs.getString("fornecedor"), rs.getFloat("precocusto"), rs.getString("un"),rs.getString("obs"));
@@ -94,9 +74,5 @@ public class DAOEstoque extends Conexao{
         }
        close();
         return estoq; 
-    }
-                
-    public void atualizaQuantidade(int cod, int qtd) throws SQLException{
-        up("update estoque set qtd = "+qtd+" where cod = "+cod);
-    }
+}
 }
