@@ -49,6 +49,16 @@ public class Estoque {
 
     public Estoque() {
     }
+
+    public Estoque(int cod) {
+        this.cod = cod;
+    }
+
+    public Estoque(String descricao) {
+        this.descricao = descricao;
+    }
+    
+    
               
     
 
@@ -148,7 +158,7 @@ public class Estoque {
     public boolean exclui(){
         DAOEstoque con = new DAOEstoque();
         try{
-            con.exclui(Integer.toString(cod));
+            con.exclui(Integer.valueOf(cod));
             return true;
         } catch(SQLException ex){
             return false;

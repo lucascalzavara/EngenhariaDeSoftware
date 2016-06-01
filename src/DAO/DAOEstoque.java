@@ -74,5 +74,9 @@ public class DAOEstoque extends Conexao{
         }
        close();
         return estoq; 
-}
+    }
+    
+    public void atualizaQuantidade(int cod, int qtd) throws SQLException{
+        up("update estoque set qtd = "+qtd+" where cod = "+cod);
+    }
 }
