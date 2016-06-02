@@ -3,6 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/*
+CREATE TABLE public.cliente
+(
+  cnpj character varying(50) NOT NULL,
+  razaosocial character varying(100) NOT NULL,
+  nomefantasia character varying(100) NOT NULL,
+  inscricaoestadual character varying(50),
+  telefone character varying(13),
+  cidade character varying(50),
+  uf character varying(20),
+  rua character varying(50) NOT NULL,
+  bairro character varying(50) NOT NULL,
+  numero character varying(10),
+  observacoes character varying(200),
+  CONSTRAINT cliente_pkey PRIMARY KEY (cnpj)
+)
+*/
+
 package DAO;
 
 import Programa.Cliente;

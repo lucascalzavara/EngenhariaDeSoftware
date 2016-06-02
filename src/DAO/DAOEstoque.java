@@ -3,6 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/*
+CREATE TABLE public.estoque
+(
+  cod integer NOT NULL,
+  valor double precision NOT NULL,
+  qtd integer NOT NULL,
+  cdbarra integer,
+  marca character varying(30) NOT NULL,
+  descricao character varying(100),
+  fornecedor character varying(19) NOT NULL,
+  precocusto double precision,
+  un character(3) NOT NULL,
+  obs character(200),
+  CONSTRAINT estoque_pkey PRIMARY KEY (cod),
+  CONSTRAINT estoque_fornecedor_fkey FOREIGN KEY (fornecedor)
+      REFERENCES public.fornecedor (cnpj) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+*/
+
 package DAO;
 
 import Programa.Estoque;
