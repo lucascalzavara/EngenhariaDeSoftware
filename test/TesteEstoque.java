@@ -15,6 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import Programa.Estoque;
 import DAO.DAOEstoque;
+import Programa.Fornecedor;
 import java.util.List;
 
 /**
@@ -25,13 +26,13 @@ public class TesteEstoque {
     
     public TesteEstoque() {
     }
-    /*
+    
     @Test
     public void testeEstoqueInsere(){
-        Estoque c = new Estoque("a");
+        Estoque c = new Estoque(1,1,1,1, "a", "a", "11.111.111/1111-11", 1, "a", "a");
         assertTrue(c.insere());
     }
-    */
+    
     @Test
     public void testeEstoqueInsereErradoValor(){
         Estoque c = new Estoque(1,-1,1,1, "a", "a", "a", 1, "a", "a");
@@ -60,19 +61,19 @@ public class TesteEstoque {
     
   
     @Test
-    public void testeClienteConsultaTodos(){
+    public void testeEstoqueConsultaTodos(){
         Estoque c = new Estoque();
         assertTrue(!c.ConsultaTodos().isEmpty());
     }
-    /*
+    
     @Test
     public void testeEstoqueConsultaCod(){
-       Estoque c = new Estoque(2);
-        assertTrue(c.ConsultaCod().getCod().equals(2));
+       Estoque c = new Estoque(1);
+        assertTrue(c.ConsultaCod().get(0).getCod()==1);
     }
-    */
+    
     @Test
-    public void testeClienteConsultaDescri(){
+    public void testeEstoqueConsultaDescri(){
         Estoque c = new Estoque("a");
         assertTrue(!c.ConsultaDescricao().isEmpty());
     }
@@ -85,10 +86,14 @@ public class TesteEstoque {
     
     @BeforeClass
     public static void setUpClass() {
+        Fornecedor a = new Fornecedor ("11.111.111/1111-11","a","a","12","(44)4444-4444","a","a","11","a","UF","1.11","a");
+        a.insere();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        Fornecedor a = new Fornecedor ("11.111.111/1111-11","a","a","12","(44)4444-4444","a","a","11","a","UF","1.11","a");
+        a.exclui();
     }
     
     @Before
